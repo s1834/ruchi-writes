@@ -145,9 +145,9 @@ export default function Nav() {
           <NavbarItem>
             <button
               className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              onClick={() => alert("Redirecting to book purchase page...")}
+              onClick={() => alert("Ruchi Writes is a space where we share the stories that connect us across generations 💌– welcome to the Fam!😊")}
             >
-              Buy My Book
+              Follow
             </button>
           </NavbarItem>
         </NavbarContent>

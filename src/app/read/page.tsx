@@ -1,12 +1,84 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { calsans } from "@/app/fonts/calsans";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { TracingBeam } from "@/components/ui/tracing-beam";
-import { FaShareAlt, FaHeart, FaComment, FaUserPlus } from "react-icons/fa"; // Icon imports
+import { FaShareAlt, FaHeart, FaComment } from "react-icons/fa"; // Icon imports
+import CommentSection from "@/app/comment/page"; // Import the CommentSection
 
 export default function Read() {
+  const [showComments, setShowComments] = useState(false);
+
+  const dummyContent = [
+    {
+      title: "Lorem Ipsum Dolor Sit Amet",
+      date: "December 5, 2024",
+      labels: ["Nature", "Travel", "Photography"],
+      description: (
+        <>
+          <p>
+            Sit duis est minim proident non nisi velit non consectetur. Esse
+            adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
+            Lorem ut aliqua anim do.
+          </p>
+        </>
+      ),
+      image:
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    // {
+    //   title: "Lorem Ipsum Dolor Sit Amet",
+    //   date: "December 5, 2024",
+    //   labels: ["Nature", "Travel", "Photography"],
+    //   description: (
+    //     <>
+    //       <p>
+    //         Sit duis est minim proident non nisi velit non consectetur. Esse
+    //         adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
+    //         Lorem ut aliqua anim do.
+    //       </p>
+    //     </>
+    //   ),
+    //   image:
+    //     "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // },
+    // {
+    //   title: "Lorem Ipsum Dolor Sit Amet",
+    //   date: "December 5, 2024",
+    //   labels: ["Nature", "Travel", "Photography"],
+    //   description: (
+    //     <>
+    //       <p>
+    //         Sit duis est minim proident non nisi velit non consectetur. Esse
+    //         adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
+    //         Lorem ut aliqua anim do.
+    //       </p>
+    //     </>
+    //   ),
+    //   image:
+    //     "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // },
+    // {
+    //   title: "Lorem Ipsum Dolor Sit Amet",
+    //   date: "December 5, 2024",
+    //   labels: ["Nature", "Travel", "Photography"],
+    //   description: (
+    //     <>
+    //       <p>
+    //         Sit duis est minim proident non nisi velit non consectetur. Esse
+    //         adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
+    //         Lorem ut aliqua anim do.
+    //       </p>
+    //     </>
+    //   ),
+    //   image:
+    //     "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // },
+  ];
+
+  const toggleComments = () => setShowComments((prev) => !prev);
+
   return (
     <div className="py-24">
       <TracingBeam className="px-6">
@@ -62,13 +134,13 @@ export default function Read() {
                   <FaComment
                     title="Comment"
                     className="text-lg cursor-pointer hover:text-gray-600"
-                  />
-                  <FaUserPlus
-                    title="Follow"
-                    className="text-lg cursor-pointer hover:text-green-600"
+                    onClick={toggleComments}
                   />
                 </div>
               </div>
+
+              {/* Comment Section */}
+              {showComments && <CommentSection />}
             </div>
           ))}
         </div>
@@ -76,70 +148,3 @@ export default function Read() {
     </div>
   );
 }
-
-const dummyContent = [
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    date: "December 5, 2024",
-    labels: ["Nature", "Travel", "Photography"],
-    description: (
-      <>
-        <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do.
-        </p>
-      </>
-    ),
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    date: "December 5, 2024",
-    labels: ["Nature", "Travel", "Photography"],
-    description: (
-      <>
-        <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do.
-        </p>
-      </>
-    ),
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    date: "December 5, 2024",
-    labels: ["Nature", "Travel", "Photography"],
-    description: (
-      <>
-        <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do.
-        </p>
-      </>
-    ),
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    date: "December 5, 2024",
-    labels: ["Nature", "Travel", "Photography"],
-    description: (
-      <>
-        <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do.
-        </p>
-      </>
-    ),
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];

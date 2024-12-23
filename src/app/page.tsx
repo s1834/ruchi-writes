@@ -3,6 +3,7 @@ import Read from "@/app/read/page";
 import Contact from "@/app/contact/page";
 import Blogs from "@/app/blogs/page";
 import About from "./about/page";
+import CommentSection from "./comment/page"
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Blogs />
       <Read />
       <Contact />
+      <CommentSection />
     </div>
   );
 }
