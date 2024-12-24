@@ -70,7 +70,7 @@ export default function Nav() {
 
           {/* Archive Dropdown Menu */}
           <NavbarItem className="relative group">
-            <button className="flex items-center space-x-2 text-white focus:outline-none">
+            <button className="flex items-center space-x-2 color:foreground focus:outline-none">
               <span>Archive</span>
               <svg
                 className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-200"
@@ -110,7 +110,7 @@ export default function Nav() {
 
           {/* Labels Dropdown Menu */}
           <NavbarItem className="relative group">
-            <button className="flex items-center space-x-2 text-white focus:outline-none">
+            <button className="flex items-center space-x-2 color:foreground focus:outline-none">
               <span>Labels</span>
               <svg
                 className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-200"
@@ -164,11 +164,11 @@ export default function Nav() {
               {followState ? "Following" : "Follow"}
             </button>
           </NavbarItem>
-        </NavbarContent>
+        {/* </NavbarContent> */}
 
         {/* Theme Switcher */}
-        <NavbarContent justify="end">
-          <NavbarItem>
+        {/* <NavbarContent justify="end"> */}
+          <NavbarItem >
             <Switch
               isSelected={theme === "dark"}
               size="lg"
