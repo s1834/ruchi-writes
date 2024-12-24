@@ -16,6 +16,8 @@ import { SunIcon } from "@/components/icons/SunIcon";
 export default function Nav() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [active, setActive] = useState<string | null>(null);
+  const [followState, setFollowState] = useState<boolean>(false);
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -36,20 +38,32 @@ export default function Nav() {
     document.documentElement.classList.toggle("dark", newTheme === "dark");
     localStorage.setItem("theme", newTheme);
   };
+  const handleFollowClick = () => {
+    if (followState) {
+    
+      if (window.confirm("Are you sure you want to unfollow?")) {
+        setFollowState(false); // Change state back to Follow
+      }
+    } else {
+      setFollowState(true); // Change state to Following
+      alert("Ruchi Writes is a space where we share the stories that connect us across generations 💌– welcome to the Fam!😊");
+    }
+  };
+
 
   return (
     <div className="relative w-full">
       <Navbar
         position="static"
         maxWidth="lg"
-        className="fixed backdrop-blur-sm bg-opacity-30 bg-white/0 dark:bg-black/0 py-4 px-6"
+        className="fixed backdrop-blur-sm bg-opacity-30 bg-white/0 dark:bg-black/0 py-4 px-6 z-50"
       >
         <NavbarBrand>
           <p className="font-bold text-inherit text-2xl">Ruchi Writes</p>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-8" justify="center">
           <NavbarItem>
-            <Link color="foreground" href="#">
+            <Link color="foreground" href="/blogs">
               Read
             </Link>
           </NavbarItem>
@@ -136,18 +150,18 @@ export default function Nav() {
 
           {/* Normal Links (no dropdown) */}
           <NavbarItem>
-            <Link color="foreground" href="#">
+            <Link color="foreground" href="/contact">
               Contact
             </Link>
           </NavbarItem>
 
-          {/* Buy My Book Button */}
+          {/* Follow */}
           <NavbarItem>
             <button
-              className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              onClick={() => alert("Ruchi Writes is a space where we share the stories that connect us across generations 💌– welcome to the Fam!😊")}
+              className={`px-4 py-2 text-white ${followState ? "bg-green-600 hover:bg-green-700" : "bg-blue-600 hover:bg-blue-700"} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300`}
+              onClick={handleFollowClick}
             >
-              Follow
+              {followState ? "Following" : "Follow"}
             </button>
           </NavbarItem>
         </NavbarContent>

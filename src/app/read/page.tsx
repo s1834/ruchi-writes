@@ -4,8 +4,9 @@ import { calsans } from "@/app/fonts/calsans";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { TracingBeam } from "@/components/ui/tracing-beam";
-import { FaShareAlt, FaHeart, FaComment } from "react-icons/fa"; // Icon imports
-import CommentSection from "@/app/comment/page"; // Import the CommentSection
+import { FaShareAlt, FaHeart, FaComment } from "react-icons/fa"; 
+import CommentSection from "@/app/comment/page"; 
+import Nav from "@/app/navbar/page";
 
 export default function Read() {
   const [showComments, setShowComments] = useState(false);
@@ -80,9 +81,10 @@ export default function Read() {
   const toggleComments = () => setShowComments((prev) => !prev);
 
   return (
-    <div className="py-24">
-      <TracingBeam className="px-6">
-        <div className="max-w-2xl mx-auto antialiased pt-4 relative">
+    <div className="py-100">
+        <Nav />
+      <TracingBeam className="px-6 ">
+        <div className="max-w-2xl mx-auto antialiased pt-4 relative ">
           {dummyContent.map((item, index) => (
             <div key={`content-${index}`} className="mb-10">
               {/* Title and Share Icon */}
