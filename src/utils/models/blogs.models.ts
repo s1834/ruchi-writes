@@ -15,7 +15,7 @@ const blogSchema = new mongoose.Schema(
     },
     date: {
       type: Date,
-      default: Date.now,
+      default: Date.now, // If not provided, the current date is used
     },
     content: {
       type: String,
@@ -28,7 +28,7 @@ const blogSchema = new mongoose.Schema(
     ],
     blogViews: {
       type: Number,
-      default: 0,
+      default: 0, // Default to 0 if not provided
     },
     isFeatured: {
       type: Boolean,

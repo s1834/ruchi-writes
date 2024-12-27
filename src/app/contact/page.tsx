@@ -8,8 +8,8 @@ import {
   IconBrandLinkedin,
   IconBrandX,
 } from "@tabler/icons-react";
-// import emailjs from "@emailjs/browser";
-// import toast, { Toaster } from "react-hot-toast";
+import emailjs from "@emailjs/browser";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Contact() {
   const form = useRef<HTMLFormElement | null>(null);
@@ -17,31 +17,72 @@ export default function Contact() {
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // const serviceId = process.env.NEXT_PUBLIC_SERVICE_ID;
-    // const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
-    // const key = process.env.NEXT_PUBLIC_PUBLIC_KEY;
+    const serviceId = process.env.NEXT_PUBLIC_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+    const key = process.env.NEXT_PUBLIC_PUBLIC_KEY;
 
-    // if (!serviceId || !templateId || !key) {
-    //   console.error(
-    //     "Missing environment variables. Please ensure Service ID, Template ID, and Public Key are properly set."
-    //   );
-    //   toast.error("Failed to send message. Please try again later.");
-    //   return;
-    // }
+    if (!serviceId || !templateId || !key) {
+      console.error(
+        "Missing environment variables. Please ensure Service ID, Template ID, and Public Key are properly set."
+      );
+      toast.error("Failed to send message. Please try again later.");
+      return;
+    }
 
-    // emailjs
-    //   .sendForm(serviceId, templateId, e.target as HTMLFormElement, key)
-    //   .then(
-    //     () => {
-    //       console.log("Email successfully sent!");
-    //       toast.success("Message Sent!");
-    //       (e.target as HTMLFormElement).reset();
-    //     },
-    //     (error) => {
-    //       console.error("Email sending failed. Error details:", error);
-    //       toast.error("Failed to send message. Please try again later.");
-    //     }
-    //   );
+    emailjs
+      .sendForm(serviceId, templateId, e.target as HTMLFormElement, key)
+      .then(
+        () => {
+          console.log("Email successfully sent!");
+          toast.success("Message Sent!");
+          (e.target as HTMLFormElement).reset();
+        },
+        (error) => {
+          console.error("Email sending failed. Error details:", error);
+          toast.error("Failed to send message. Please try again later.");
+        }
+      );
+  };
+
+  const [email, setEmail] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubscribe = async () => {
+    if (!email) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        if (data.exists) {
+          toast.error("Email already exists.");
+        } else {
+          setIsSubscribed(true);
+          toast.success("Successfully subscribed!");
+          setEmail("");
+        }
+      } else {
+        toast.error("Failed to subscribe. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error subscribing:", error);
+      toast.error("Failed to subscribe. Please try again.");
+    }
   };
 
   return (
@@ -101,7 +142,7 @@ export default function Contact() {
             <BottomGradient />
           </button>
 
-          {/* <Toaster /> */}
+          <Toaster />
 
           <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
 
@@ -131,41 +172,45 @@ export default function Contact() {
             Join the waitlist
           </h1>
           <p className="text-neutral-500 text-center mt-4">
-            Welcome to MailJet, the best transactional email service on the web.
-            We provide reliable, scalable, and customizable email solutions for
-            your business.
+            Stay updated with the latest posts from my blog, upcoming books, and
+            much more. By subscribing, you’ll be the first to receive exclusive
+            content, updates, and insights directly in your inbox. Don't miss
+            out on any exciting news – subscribe now and stay in the loop!
           </p>
 
           {/* Email Input with Subscribe Button */}
           <div className="mt-4 flex w-full space-x-2">
             <input
               type="email"
+              value={email}
+              onChange={handleEmailChange}
               placeholder="hi@manuarora.in"
               className="flex-1 rounded-lg bg-neutral-950 border border-neutral-800 placeholder:text-neutral-700 px-4 py-2 text-white"
             />
             <button
               className="rounded-lg bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 font-medium"
-              type="button"
+              onClick={handleSubscribe}
             >
               Subscribe
             </button>
           </div>
 
-          <div className="mt-8 text-center text-neutral-500 text-sm">
-            <p>© {new Date().getFullYear()} MailJet. All rights reserved.</p>
-            <p>
+          <div className="mt-8 text-center text-neutral-500 text-lg">
+            <p>© {new Date().getFullYear()} Ruchi Shah. All rights reserved.</p>{" "}
+            <br />
+            <p className="-mt-6">
               Developed by{" "}
               <a
-                href="https://your-s1834-portfolio-link.com"
+                href="https://shubhshah.xyz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold underline"
               >
-                s1834
-              </a>{" "}
+                s1834{" "}
+              </a>
               and{" "}
               <a
-                href="https://khushi-portfolio-link.com"
+                href="https://khushiupdahyay.xyz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold underline"

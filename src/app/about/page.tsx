@@ -20,8 +20,7 @@ export default function About() {
         }}
         className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
       >
-        RUCHI SHAH{" "}
-        <br/>
+        <span className="text-6xl">RUCHI WRITES</span> <br />
         <Highlight className="text-black dark:text-white">
           Poetry and Social Issues
         </Highlight>

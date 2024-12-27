@@ -1,38 +1,61 @@
-'use client'
+"use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Read from "@/app/read/page";
 
-export default function BlogCard() {
+interface BlogContent {
+  _id: string;
+  title: string;
+  date: string;
+  content: string;
+  slug: string;
+  tags?: string[];
+  blogViews?: number;
+  isFeatured?: boolean;
+  readingTime?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string[];
+  followers?: string[];
+  comments?: string[];
+  image?: string;
+}
+
+export default function BlogCard({ blog }: { blog: BlogContent }) {
   const router = useRouter();
 
+  // Send the current blog id and all blog data to the next page as state
   const handleReadMore = () => {
-    router.push("/read"); 
+    router.push("/read");
   };
 
   return (
-    
     <div className="max-w-sm mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
       {/* Image Section */}
       <div className="relative w-full h-40">
-        <Image
-          src={blogContent.image}
-          alt="thumbnail"
-          layout="fill"
-          objectFit="cover"
-          className="object-cover"
-        />
+        {blog.image && (
+          <Image
+            src={blog.image}
+            alt={blog.title}
+            layout="fill"
+            objectFit="cover"
+            className="object-cover"
+          />
+        )}
       </div>
 
       {/* Content Section */}
       <div className="p-5">
-        <h2 className="font-semibold text-lg text-gray-800">
-          {blogContent.title}
-        </h2>
-        <p className="text-gray-600 text-sm mt-3">
-          {blogContent.description}
-        </p>
+        <h2 className="font-semibold text-lg text-gray-800">{blog.title}</h2>
+        <p className="text-gray-600 text-sm mt-3">{blog.metaDescription}</p>
         <div className="flex items-center justify-between mt-5">
-          <span className="text-sm text-gray-500">{blogContent.date}</span>
+          <span className="text-sm text-gray-500">
+            {new Date(blog.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </span>
           <button
             onClick={handleReadMore}
             className="bg-black text-white text-sm px-4 py-2 rounded-lg hover:bg-gray-800 transition"
@@ -44,33 +67,3 @@ export default function BlogCard() {
     </div>
   );
 }
-
-const blogContent = {
-  slug: "amazing-tailwindcss-grid-layouts",
-  author: "Manu Arora",
-  date: "28th March, 2023",
-  title: "Amazing Tailwindcss Grid Layout Examples",
-  description:
-    "Grids are cool, but Tailwindcss grids are cooler. In this article, we will learn how to create amazing Grid layouts with Tailwindcss grid and React.",
-  image: "/image/blog.jpeg",
-  authorAvatar: "/image/blogs.jpeg",
-};
-
-const TitleComponent = ({
-  title,
-  avatar,
-}: {
-  title: string;
-  avatar: string;
-}) => (
-  <div className="flex space-x-2 items-center">
-    <Image
-      src={avatar}
-      height="20"
-      width="20"
-      alt="thumbnail"
-      className="rounded-full border-2 border-white"
-    />
-    <p>{title}</p>
-  </div>
-);

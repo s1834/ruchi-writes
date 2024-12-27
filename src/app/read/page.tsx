@@ -4,15 +4,16 @@ import { calsans } from "@/app/fonts/calsans";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { TracingBeam } from "@/components/ui/tracing-beam";
-import { FaShareAlt, FaHeart, FaComment } from "react-icons/fa"; 
-import CommentSection from "@/app/comment/page"; 
+import { FaShareAlt, FaHeart, FaComment } from "react-icons/fa";
+import CommentSection from "@/app/comment/page";
 import Nav from "@/app/navbar/page";
 import Contact from "../contact/page";
 
 export default function Read() {
   const [showComments, setShowComments] = useState(false);
-  const [commentsVisibility, setCommentsVisibility] = useState<Record<number, boolean>>({});
-
+  const [commentsVisibility, setCommentsVisibility] = useState<
+    Record<number, boolean>
+  >({});
 
   const dummyContent = [
     {
@@ -88,82 +89,80 @@ export default function Read() {
     }));
   };
 
-
   return (
     <div className="py-100">
-        <Nav />
-        <div className="relative">
+      <Nav />
+      <div className="relative">
         <TracingBeam className="px-6 mt-100 ml-20">
-
-        <div className="max-w-2xl mx-auto antialiased pt-4 relative ">
-          {dummyContent.map((item, index) => (
-            <div key={`content-${index}`} className="mb-10">
-              {/* Title and Share Icon */}
-              <div className="flex items-center justify-between mb-2">
-                <p className={twMerge(calsans.className, "text-2xl font-bold")}>
-                  {item.title}
-                </p>
-                <FaShareAlt
-                  title="Share"
-                  className="text-lg cursor-pointer hover:text-blue-600"
-                />
-              </div>
-
-              {/* Date and Labels */}
-              <div className="flex items-center text-sm text-gray-500 mb-4">
-                <span>{item.date}</span>
-                <span className="mx-2">•</span>
-                {item.labels.map((label, i) => (
-                  <span
-                    key={i}
-                    className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-xs mr-2"
+          <div className="max-w-2xl mx-auto antialiased pt-4 relative ">
+            {dummyContent.map((item, index) => (
+              <div key={`content-${index}`} className="mb-10">
+                {/* Title and Share Icon */}
+                <div className="flex items-center justify-between mb-2">
+                  <p
+                    className={twMerge(calsans.className, "text-2xl font-bold")}
                   >
-                    {label}
-                  </span>
-                ))}
-              </div>
-
-              {/* Image and Description */}
-              <div className="text-sm prose prose-sm dark:prose-invert">
-                {item?.image && (
-                  <Image
-                    src={item.image}
-                    alt="blog thumbnail"
-                    height="1000"
-                    width="1000"
-                    className="rounded-lg mb-10 object-cover"
-                  />
-                )}
-                {item.description}
-              </div>
-
-              {/* Action Icons */}
-              <div className="flex justify-between items-center mt-6">
-                <div className="flex items-center gap-6">
-                  <FaHeart
-                    title="Like"
-                    className="text-lg cursor-pointer hover:text-red-600"
-                  />
-                  <FaComment
-                    title="Comment"
-                    className="text-lg cursor-pointer hover:text-gray-600"
-                    onClick={() => toggleComments(index)}
+                    {item.title}
+                  </p>
+                  <FaShareAlt
+                    title="Share"
+                    className="text-lg cursor-pointer hover:text-blue-600"
                   />
                 </div>
-              </div>
 
-              {/* Comment Section */}
-              {commentsVisibility[index] && <CommentSection />}
-            </div>
-          ))}
-        </div>
-        
-      </TracingBeam>
-      {/* <div className="bg-gray-50 dark:bg-gray-900 py-10 px-6"> */}
-      <Contact/>
-      {/* </div> */}
+                {/* Date and Labels */}
+                <div className="flex items-center text-sm text-gray-500 mb-4">
+                  <span>{item.date}</span>
+                  <span className="mx-2">•</span>
+                  {item.labels.map((label, i) => (
+                    <span
+                      key={i}
+                      className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-xs mr-2"
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Image and Description */}
+                <div className="text-sm prose prose-sm dark:prose-invert">
+                  {item?.image && (
+                    <Image
+                      src={item.image}
+                      alt="blog thumbnail"
+                      height="1000"
+                      width="1000"
+                      className="rounded-lg mb-10 object-cover"
+                    />
+                  )}
+                  {item.description}
+                </div>
+
+                {/* Action Icons */}
+                <div className="flex justify-between items-center mt-6">
+                  <div className="flex items-center gap-6">
+                    <FaHeart
+                      title="Like"
+                      className="text-lg cursor-pointer hover:text-red-600"
+                    />
+                    <FaComment
+                      title="Comment"
+                      className="text-lg cursor-pointer hover:text-gray-600"
+                      onClick={() => toggleComments(index)}
+                    />
+                  </div>
+                </div>
+
+                {/* Comment Section */}
+                {commentsVisibility[index] && <CommentSection />}
+              </div>
+            ))}
+          </div>
+        </TracingBeam>
+        {/* <div className="bg-gray-50 dark:bg-gray-900 py-10 px-6"> */}
+        <Contact />
+        {/* </div> */}
+      </div>
     </div>
-    </div>
-  
   );
 }
