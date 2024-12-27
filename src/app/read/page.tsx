@@ -1,16 +1,101 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { calsans } from "@/app/fonts/calsans";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { TracingBeam } from "@/components/ui/tracing-beam";
-import { FaShareAlt, FaHeart, FaComment, FaUserPlus } from "react-icons/fa"; // Icon imports
+import { FaShareAlt, FaHeart, FaComment } from "react-icons/fa"; 
+import CommentSection from "@/app/comment/page"; 
+import Nav from "@/app/navbar/page";
+import Contact from "../contact/page";
 
 export default function Read() {
+  const [showComments, setShowComments] = useState(false);
+  const [commentsVisibility, setCommentsVisibility] = useState<Record<number, boolean>>({});
+
+
+  const dummyContent = [
+    {
+      title: "Lorem Ipsum Dolor Sit Amet",
+      date: "December 5, 2024",
+      labels: ["Nature", "Travel", "Photography"],
+      description: (
+        <>
+          <p>
+            Sit duis est minim proident non nisi velit non consectetur. Esse
+            adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
+            Lorem ut aliqua anim do.
+          </p>
+        </>
+      ),
+      image:
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "Lorem Ipsum Dolor Sit Amet",
+      date: "December 5, 2024",
+      labels: ["Nature", "Travel", "Photography"],
+      description: (
+        <>
+          <p>
+            Sit duis est minim proident non nisi velit non consectetur. Esse
+            adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
+            Lorem ut aliqua anim do.
+          </p>
+        </>
+      ),
+      image:
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "Lorem Ipsum Dolor Sit Amet",
+      date: "December 5, 2024",
+      labels: ["Nature", "Travel", "Photography"],
+      description: (
+        <>
+          <p>
+            Sit duis est minim proident non nisi velit non consectetur. Esse
+            adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
+            Lorem ut aliqua anim do.
+          </p>
+        </>
+      ),
+      image:
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      title: "Lorem Ipsum Dolor Sit Amet",
+      date: "December 5, 2024",
+      labels: ["Nature", "Travel", "Photography"],
+      description: (
+        <>
+          <p>
+            Sit duis est minim proident non nisi velit non consectetur. Esse
+            adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
+            Lorem ut aliqua anim do.
+          </p>
+        </>
+      ),
+      image:
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+  ];
+
+  const toggleComments = (index: number) => {
+    setCommentsVisibility((prev) => ({
+      ...prev,
+      [index]: !prev[index], // Toggle visibility for the specific item
+    }));
+  };
+
+
   return (
-    <div className="py-24">
-      <TracingBeam className="px-6">
-        <div className="max-w-2xl mx-auto antialiased pt-4 relative">
+    <div className="py-100">
+        <Nav />
+        <div className="relative">
+        <TracingBeam className="px-6 mt-100 ml-20">
+
+        <div className="max-w-2xl mx-auto antialiased pt-4 relative ">
           {dummyContent.map((item, index) => (
             <div key={`content-${index}`} className="mb-10">
               {/* Title and Share Icon */}
@@ -62,84 +147,23 @@ export default function Read() {
                   <FaComment
                     title="Comment"
                     className="text-lg cursor-pointer hover:text-gray-600"
-                  />
-                  <FaUserPlus
-                    title="Follow"
-                    className="text-lg cursor-pointer hover:text-green-600"
+                    onClick={() => toggleComments(index)}
                   />
                 </div>
               </div>
+
+              {/* Comment Section */}
+              {commentsVisibility[index] && <CommentSection />}
             </div>
           ))}
         </div>
+        
       </TracingBeam>
+      {/* <div className="bg-gray-50 dark:bg-gray-900 py-10 px-6"> */}
+      <Contact/>
+      {/* </div> */}
     </div>
+    </div>
+  
   );
 }
-
-const dummyContent = [
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    date: "December 5, 2024",
-    labels: ["Nature", "Travel", "Photography"],
-    description: (
-      <>
-        <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do.
-        </p>
-      </>
-    ),
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    date: "December 5, 2024",
-    labels: ["Nature", "Travel", "Photography"],
-    description: (
-      <>
-        <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do.
-        </p>
-      </>
-    ),
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    date: "December 5, 2024",
-    labels: ["Nature", "Travel", "Photography"],
-    description: (
-      <>
-        <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do.
-        </p>
-      </>
-    ),
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    date: "December 5, 2024",
-    labels: ["Nature", "Travel", "Photography"],
-    description: (
-      <>
-        <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do.
-        </p>
-      </>
-    ),
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
