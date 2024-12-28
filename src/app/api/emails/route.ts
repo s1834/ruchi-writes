@@ -1,12 +1,38 @@
 import { NextResponse } from "next/server";
 import Emails from "@/utils/models/emails.models";
 
-// POST: Add a new email
+// GET all emails
+export async function GET(req: Request) {
+  try {
+    const emails = await Emails.find();
+
+    if (emails.length === 0) {
+      return NextResponse.json({ message: "No emails found" }, { status: 404 });
+    }
+
+    return NextResponse.json(emails, { status: 200 });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err.message);
+      return NextResponse.json(
+        { message: "Failed to retrieve emails", error: err.message },
+        { status: 400 }
+      );
+    } else {
+      console.error("Unknown error", err);
+      return NextResponse.json(
+        { message: "Failed to retrieve emails", error: "Unknown error" },
+        { status: 400 }
+      );
+    }
+  }
+}
+
+// POST new email
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
 
-    // Validate email
     if (!email) {
       return NextResponse.json(
         { message: "Email is required" },
@@ -23,7 +49,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create a new email document
     const newEmail = await Emails.create({ email });
 
     return NextResponse.json(newEmail, { status: 201 });
@@ -44,12 +69,11 @@ export async function POST(req: Request) {
   }
 }
 
-// DELETE: Delete an email by ID
+// DELETE by ID
 export async function DELETE(req: Request) {
   try {
     const { emailId } = await req.json();
 
-    // Find and delete the email by its ID
     const deletedEmail = await Emails.findByIdAndDelete(emailId);
 
     if (!deletedEmail) {
@@ -71,33 +95,6 @@ export async function DELETE(req: Request) {
       console.error("Unknown error", err);
       return NextResponse.json(
         { message: "Failed to delete email", error: "Unknown error" },
-        { status: 400 }
-      );
-    }
-  }
-}
-
-// GET: Fetch all emails
-export async function GET(req: Request) {
-  try {
-    const emails = await Emails.find();
-
-    if (emails.length === 0) {
-      return NextResponse.json({ message: "No emails found" }, { status: 404 });
-    }
-
-    return NextResponse.json(emails, { status: 200 });
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.error(err.message);
-      return NextResponse.json(
-        { message: "Failed to retrieve emails", error: err.message },
-        { status: 400 }
-      );
-    } else {
-      console.error("Unknown error", err);
-      return NextResponse.json(
-        { message: "Failed to retrieve emails", error: "Unknown error" },
         { status: 400 }
       );
     }

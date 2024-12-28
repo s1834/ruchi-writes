@@ -101,19 +101,19 @@ export default function Nav() {
             <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-0 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
               <Link
                 href="/archive-1"
-                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:rounded-md  hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Archive Item 1
               </Link>
               <Link
                 href="/archive-2"
-                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:rounded-md hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Archive Item 2
               </Link>
               <Link
                 href="/archive-3"
-                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:rounded-md hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Archive Item 3
               </Link>
@@ -143,19 +143,19 @@ export default function Nav() {
             <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-0 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
               <Link
                 href="/label-1"
-                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:rounded-md hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Label Item 1
               </Link>
               <Link
                 href="/label-2"
-                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:rounded-md hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Label Item 2
               </Link>
               <Link
                 href="/label-3"
-                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:rounded-md hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Label Item 3
               </Link>

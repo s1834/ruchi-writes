@@ -20,8 +20,25 @@ export async function GET(req: Request) {
 
       return NextResponse.json(blog, { status: 200 });
     } else {
-      // If no 'id' is provided, fetch all blogs
+      // Fetch top 7 blogs with most views and mark them as featured
+      const topBlogs = await Blogs.find()
+        .sort({ blogViews: -1 }) // Sort blogs by most viewed (descending)
+        .limit(7); // Limit to top 7 blogs
+
+      // Update top blogs to be featured
+      const featuredBlogs = await Promise.all(
+        topBlogs.map((blog) => {
+          return Blogs.findByIdAndUpdate(
+            blog._id,
+            { isFeatured: true },
+            { new: true }
+          );
+        })
+      );
+
+      // Fetch all blogs
       const blogs = await Blogs.find();
+
       return NextResponse.json(blogs, { status: 200 });
     }
   } catch (err) {
@@ -33,7 +50,7 @@ export async function GET(req: Request) {
   }
 }
 
-// Create a new blog
+// POST new blog
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -63,11 +80,9 @@ export async function POST(req: Request) {
     // Calculate reading time
     const wordsPerMinute = 200;
     const averageWordLength = 5;
-    const readingTime = Math.ceil(
-      content.length / (averageWordLength * wordsPerMinute)
-    );
+    const readingTime =
+      Math.ceil(content.length / (averageWordLength * wordsPerMinute)) + 5;
 
-    // Create the new blog with optional date and blogViews
     const newBlog = await Blogs.create({
       title,
       slug,
@@ -93,7 +108,7 @@ export async function POST(req: Request) {
   }
 }
 
-// Update an existing blog (PUT)
+// PUT/Update an existing blog
 export async function PUT(req: Request) {
   try {
     const { id } = req.url.match(/\/([a-fA-F0-9]{24})$/)!.groups!;
@@ -159,18 +174,17 @@ export async function PUT(req: Request) {
   }
 }
 
-// Partially update an existing blog (PATCH)
+// PATCH Partially update an existing blog
 export async function PATCH(req: Request) {
   try {
     const { id } = req.url.match(/\/([a-fA-F0-9]{24})$/)!.groups!;
     const body = await req.json();
 
-    // Increment blogViews if not manually set
     const updatedBlog = await Blogs.findByIdAndUpdate(
       id,
       {
-        $set: body, // Only update the fields provided in the body
-        $inc: { blogViews: body.blogViews === undefined ? 1 : 0 }, // Increment blogViews by 1 if not manually set
+        $set: body,
+        $inc: { blogViews: body.blogViews === undefined ? 1 : 0 },
       },
       { new: true }
     );

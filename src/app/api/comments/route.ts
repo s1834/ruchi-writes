@@ -1,7 +1,47 @@
 import { NextResponse } from "next/server";
 import Comments from "@/utils/models/comments.models";
 
-// POST: Add a new comment to a blog
+// GET comments for a specific blog
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const blogId = searchParams.get("blogId");
+
+    if (!blogId) {
+      return NextResponse.json(
+        { message: "Blog ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const comments = await Comments.find({ blogId });
+
+    if (comments.length === 0) {
+      return NextResponse.json(
+        { message: "No comments found for this blog" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(comments, { status: 200 });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err.message);
+      return NextResponse.json(
+        { message: "Failed to retrieve comments", error: err.message },
+        { status: 400 }
+      );
+    } else {
+      console.error("Unknown error", err);
+      return NextResponse.json(
+        { message: "Failed to retrieve comments", error: "Unknown error" },
+        { status: 400 }
+      );
+    }
+  }
+}
+
+// POST new comment
 export async function POST(req: Request) {
   try {
     const { blogId, name, email, content, guest, randomPic } = await req.json();
@@ -11,8 +51,10 @@ export async function POST(req: Request) {
       name,
       email,
       content,
-      guest: guest || true, // default to true if guest not provided
-      randomPic: randomPic || "", // default to empty string if randomPic not provided
+      guest: guest || true,
+      randomPic:
+        randomPic ||
+        "https://images.unsplash.com/photo-1475874619827-b5f0310b6e6f?q=80&w=4000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     });
 
     return NextResponse.json(newComment, { status: 201 });
@@ -33,7 +75,7 @@ export async function POST(req: Request) {
   }
 }
 
-// PUT: Update an existing comment
+// PUT/Update an existing comment
 export async function PUT(req: Request) {
   try {
     const { commentId, content } = await req.json();
@@ -69,7 +111,7 @@ export async function PUT(req: Request) {
   }
 }
 
-// PATCH: Increment specific comment data (e.g., likes)
+// PATCH/Increment specific comment data
 export async function PATCH(req: Request) {
   try {
     const { commentId, likes } = await req.json();
@@ -105,7 +147,7 @@ export async function PATCH(req: Request) {
   }
 }
 
-// DELETE: Delete a comment by ID
+// DELETE comment by ID
 export async function DELETE(req: Request) {
   try {
     const { commentId } = await req.json();
@@ -134,46 +176,6 @@ export async function DELETE(req: Request) {
       console.error("Unknown error", err);
       return NextResponse.json(
         { message: "Failed to delete comment", error: "Unknown error" },
-        { status: 400 }
-      );
-    }
-  }
-}
-
-// GET: Fetch comments for a specific blog
-export async function GET(req: Request) {
-  try {
-    const { searchParams } = new URL(req.url);
-    const blogId = searchParams.get("blogId");
-
-    if (!blogId) {
-      return NextResponse.json(
-        { message: "Blog ID is required" },
-        { status: 400 }
-      );
-    }
-
-    const comments = await Comments.find({ blogId });
-
-    if (comments.length === 0) {
-      return NextResponse.json(
-        { message: "No comments found for this blog" },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json(comments, { status: 200 });
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      console.error(err.message);
-      return NextResponse.json(
-        { message: "Failed to retrieve comments", error: err.message },
-        { status: 400 }
-      );
-    } else {
-      console.error("Unknown error", err);
-      return NextResponse.json(
-        { message: "Failed to retrieve comments", error: "Unknown error" },
         { status: 400 }
       );
     }

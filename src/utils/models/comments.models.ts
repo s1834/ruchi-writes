@@ -20,6 +20,8 @@ const commentSchema = new mongoose.Schema(
     },
     randomPic: {
       type: String,
+      default:
+        "https://images.unsplash.com/photo-1475874619827-b5f0310b6e6f?q=80&w=4000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     content: {
       type: String,
@@ -29,8 +31,24 @@ const commentSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    reply: [
+    replies: [
       {
+        name: {
+          type: String,
+          required: [true, "A reply must have a name"],
+        },
+        email: {
+          type: String,
+        },
+        guest: {
+          type: Boolean,
+          default: true,
+        },
+        randomPic: {
+          type: String,
+          default:
+            "https://images.unsplash.com/photo-1475874619827-b5f0310b6e6f?q=80&w=4000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
         text: {
           type: String,
           required: true,
@@ -43,6 +61,17 @@ const commentSchema = new mongoose.Schema(
           type: Number,
           default: 0,
         },
+        parentComment: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Comment", // Reference to the parent comment
+        },
+        // Nested replies
+        replies: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment", // Allows recursive referencing of replies
+          },
+        ],
       },
     ],
     commentLikeCount: {
@@ -51,7 +80,7 @@ const commentSchema = new mongoose.Schema(
     },
     parentComment: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
+      ref: "Comment", // References a parent comment, if the comment itself is a reply
     },
   },
   {
