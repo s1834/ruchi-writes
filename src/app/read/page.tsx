@@ -92,8 +92,8 @@ export default function Read() {
   return (
     <div className="py-100">
       <Nav />
-      <div className="relative">
-        <TracingBeam className="px-6 mt-100 ml-20">
+      <div className="relative bg-white dark:bg-neutral-950 pt-32">
+        <TracingBeam className="px-6">
           <div className="max-w-2xl mx-auto antialiased pt-4 relative ">
             {dummyContent.map((item, index) => (
               <div key={`content-${index}`} className="mb-10">
@@ -124,7 +124,6 @@ export default function Read() {
                   ))}
                 </div>
 
-                {/* Image and Description */}
                 <div className="text-sm prose prose-sm dark:prose-invert">
                   {item?.image && (
                     <Image
@@ -138,7 +137,6 @@ export default function Read() {
                   {item.description}
                 </div>
 
-                {/* Action Icons */}
                 <div className="flex justify-between items-center mt-6">
                   <div className="flex items-center gap-6">
                     <FaHeart
@@ -153,15 +151,14 @@ export default function Read() {
                   </div>
                 </div>
 
-                {/* Comment Section */}
                 {commentsVisibility[index] && <CommentSection />}
               </div>
             ))}
           </div>
         </TracingBeam>
-        {/* <div className="bg-gray-50 dark:bg-gray-900 py-10 px-6"> */}
-        <Contact />
-        {/* </div> */}
+        <div>
+          <Contact />
+        </div>
       </div>
     </div>
   );

@@ -8,11 +8,16 @@ import {
 
 export default function MoreBlogCard() {
   return (
-    <div className="flex py-20 items-center justify-center antialiased">
+    <div className="flex items-center justify-center antialiased">
       <GlowingStarsBackgroundCard>
         <GlowingStarsTitle>Read More Blogs</GlowingStarsTitle>
         <div className="flex justify-between items-end">
-          <GlowingStarsDescription>Ruchi Writes</GlowingStarsDescription>
+          <GlowingStarsDescription>
+            Some incidents which I see in daily life provoke my heart, mind and
+            thoughtfulness to indulge in writing on these issues with a
+            hopefulness of bringing some change in society as people read my
+            blogs.
+          </GlowingStarsDescription>
           <div className="h-8 w-8 rounded-full bg-[hsla(0,0%,100%,.1)] flex items-center justify-center">
             <Icon />
           </div>

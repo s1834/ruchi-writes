@@ -46,7 +46,9 @@ export default function Blogs() {
       {blogContent.map((blog, index) => (
         <BlogCard key={index} blog={blog} />
       ))}
-      <MoreBlogCard />
+      <div>
+        <MoreBlogCard />
+      </div>
     </div>
   );
 }

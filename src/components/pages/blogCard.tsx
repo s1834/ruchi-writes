@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Read from "@/app/read/page";
 
 interface BlogContent {
   _id: string;
@@ -24,14 +23,12 @@ interface BlogContent {
 export default function BlogCard({ blog }: { blog: BlogContent }) {
   const router = useRouter();
 
-  // Send the current blog id and all blog data to the next page as state
   const handleReadMore = () => {
     router.push("/read");
   };
 
   return (
     <div className="max-w-sm mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-      {/* Image Section */}
       <div className="relative w-full h-40">
         {blog.image && (
           <Image
@@ -44,10 +41,18 @@ export default function BlogCard({ blog }: { blog: BlogContent }) {
         )}
       </div>
 
-      {/* Content Section */}
       <div className="p-5">
-        <h2 className="font-semibold text-lg text-gray-800">{blog.title}</h2>
-        <p className="text-gray-600 text-sm mt-3">{blog.metaDescription}</p>
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold text-lg text-gray-800">{blog.title}</h2>
+          {blog.readingTime && (
+            <span className="inline-block bg-green-100 text-green-700 font-semibold px-2 py-1 rounded-full text-xs">
+              {`${blog.readingTime} min read`}
+            </span>
+          )}
+        </div>
+
+        <p className="text-gray-600 text-sm mt-3">{blog.slug}.........</p>
+
         <div className="flex items-center justify-between mt-5">
           <span className="text-sm text-gray-500">
             {new Date(blog.date).toLocaleDateString("en-US", {

@@ -22,7 +22,7 @@ export const GlowingStarsBackgroundCard = ({
         setMouseEnter(false);
       }}
       className={cn(
-        "bg-[linear-gradient(110deg,#333_0.6%,#222)] p-4 max-w-md max-h-[20rem] h-full w-full rounded-xl border border-[#eaeaea] dark:border-neutral-600",
+        "bg-[linear-gradient(110deg,#333_0.6%,#222)] p-4 max-w-sm w-full rounded-xl border border-[#eaeaea] dark:border-neutral-600",
         className
       )}
     >
@@ -42,7 +42,7 @@ export const GlowingStarsDescription = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <p className={cn("text-base text-white max-w-[16rem]", className)}>
+    <p className={cn("text-base text-neutral-500 max-w-[16rem]", className)}>
       {children}
     </p>
   );
@@ -56,16 +56,16 @@ export const GlowingStarsTitle = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <h2 className={cn("font-bold text-2xl text-[#eaeaea]", className)}>
+    <h2 className={cn("font-bold text-3xl text-white mb-4", className)}>
       {children}
     </h2>
   );
 };
 
 export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
-  const stars = 108;
+  const stars = 180;
   const columns = 18;
-
+  const rows = Math.ceil(stars / columns);
   const [glowingStars, setGlowingStars] = useState<number[]>([]);
 
   const highlightedStars = useRef<number[]>([]);
@@ -83,10 +83,11 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
 
   return (
     <div
-      className="h-48 p-1 w-full"
+      className="h-64 p-1 w-full"
       style={{
         display: "grid",
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
+        gridTemplateRows: `repeat(${rows}, 1fr)`,
         gap: `1px`,
       }}
     >
@@ -96,7 +97,7 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
         const staticDelay = starIdx * 0.01;
         return (
           <div
-            key={`matrix-col-${starIdx}}`}
+            key={`matrix-col-${starIdx}`}
             className="relative flex items-center justify-center"
           >
             <Star
@@ -152,7 +153,7 @@ const Glow = ({ delay }: { delay: number }) => {
       exit={{
         opacity: 0,
       }}
-      className="absolute  left-1/2 -translate-x-1/2 z-10 h-[4px] w-[4px] rounded-full bg-blue-500 blur-[1px] shadow-2xl shadow-blue-400"
+      className="absolute left-1/2 -translate-x-1/2 z-10 h-[4px] w-[4px] rounded-full bg-blue-500 blur-[1px] shadow-2xl shadow-blue-400"
     />
   );
 };

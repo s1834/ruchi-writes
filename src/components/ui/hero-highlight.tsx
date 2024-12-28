@@ -26,6 +26,9 @@ export const HeroHighlight = ({
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
   }
+
+  const visitorCount = 3579;
+
   return (
     <div
       className={cn(
@@ -56,6 +59,16 @@ export const HeroHighlight = ({
       />
 
       <div className={cn("relative z-20", className)}>{children}</div>
+
+      <div className="absolute right-0 top-3/4 transform -translate-y-1/2 bg-gradient-to-r from-blue-500 via-purple-600 to-black text-white text-center rounded-l-full px-6 py-4 shadow-xl opacity-90 w-52">
+        <div className="flex justify-between items-center">
+          <div className="text-lg font-semibold">
+            <span className="block">You are</span>
+            <span className="block">visitor</span>
+          </div>
+          <div className="text-3xl font-semibold">{visitorCount}</div>
+        </div>
+      </div>
     </div>
   );
 };

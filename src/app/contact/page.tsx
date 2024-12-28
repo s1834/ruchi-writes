@@ -92,7 +92,7 @@ export default function Contact() {
     >
       <div className="flex-1 flex flex-col items-start justify-center space-y-8 w-full max-w-lg">
         <p className="dark:text-white text-black text-[3.5rem] font-semibold">
-          Let's Connect<span className="text-[#5046e6]">.</span>
+          Get in Touch<span className="text-[#5046e6]">.</span>
         </p>
         <form
           className="flex flex-col space-y-4 w-full"
@@ -144,7 +144,7 @@ export default function Contact() {
 
           <Toaster />
 
-          <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
+          {/* <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
 
           <div className="flex flex-row space-x-4">
             <SocialButton
@@ -162,14 +162,14 @@ export default function Contact() {
               icon={<IconBrandX className="h-4 w-4" />}
               label="X (Twitter)"
             />
-          </div>
+          </div> */}
         </form>
       </div>
 
       <div className="flex-1 flex justify-center items-center relative h-[40rem] w-full max-w-xl">
         <div className="flex-1 flex flex-col items-center justify-center h-[40rem] w-full max-w-xl bg-white dark:bg-neutral-950 rounded-md p-4">
-          <h1 className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-neutral-200 to-neutral-600 text-center">
-            Join the waitlist
+          <h1 className="text-7xl font-bold text-black dark:text-transparent dark:bg-clip-text bg-gradient-to-b dark:from-neutral-200 dark:to-neutral-600 text-center">
+            Join Newsletter
           </h1>
           <p className="text-neutral-500 text-center mt-4">
             Stay updated with the latest posts from my blog, upcoming books, and
@@ -178,14 +178,14 @@ export default function Contact() {
             out on any exciting news – subscribe now and stay in the loop!
           </p>
 
-          {/* Email Input with Subscribe Button */}
+          {/* Subscribe to Newsletter */}
           <div className="mt-4 flex w-full space-x-2">
             <input
               type="email"
               value={email}
               onChange={handleEmailChange}
-              placeholder="hi@manuarora.in"
-              className="flex-1 rounded-lg bg-neutral-950 border border-neutral-800 placeholder:text-neutral-700 px-4 py-2 text-white"
+              placeholder="ruchiwrites@gmail.com"
+              className="flex-1 rounded-lg bg-white placeholder:text-neutral-400  dark:bg-neutral-950 border border-neutral-800 dark:placeholder:text-neutral-700 px-4 py-2 text-white"
             />
             <button
               className="rounded-lg bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 font-medium"
@@ -210,7 +210,7 @@ export default function Contact() {
               </a>
               and{" "}
               <a
-                href="https://khushiupdahyay.xyz"
+                href="https://khushiupadhyay.xyz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold underline"

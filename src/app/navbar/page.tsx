@@ -50,7 +50,7 @@ export default function Nav() {
         <NavbarBrand>
           <Link
             href="/"
-            className="font-bold text-2xl hover:text-indigo-600 dark:hover:text-indigo-300"
+            className="font-bold text-2xl hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 hover:dark:from-indigo-500 hover:dark:to-purple-500"
           >
             Ruchi Writes
           </Link>
@@ -72,7 +72,7 @@ export default function Nav() {
           <NavbarItem>
             <Link
               href="/blogs"
-              className="relative inline-block pb-1 px-1 rounded-lg hover:bg-gradient-to-r from-indigo-300 to-purple-300 dark:from-indigo-500 dark:to-purple-500 transition-all duration-300"
+              className="relative inline-block pb-1 px-1 rounded-lg hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 transition-all duration-300"
             >
               Read
             </Link>
@@ -81,7 +81,9 @@ export default function Nav() {
           {/* Archive Dropdown Menu */}
           <NavbarItem className="relative group">
             <button className="flex items-center space-x-2 color:foreground focus:outline-none">
-              <span>Archive</span>
+              <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-300 group-hover:to-purple-300 group-hover:dark:from-indigo-500 group-hover:dark:to-purple-500">
+                Archive
+              </span>
               <svg
                 className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-200"
                 xmlns="http://www.w3.org/2000/svg"
@@ -96,22 +98,22 @@ export default function Nav() {
                 />
               </svg>
             </button>
-            <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-2 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
+            <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-0 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
               <Link
                 href="/archive-1"
-                className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Archive Item 1
               </Link>
               <Link
                 href="/archive-2"
-                className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Archive Item 2
               </Link>
               <Link
                 href="/archive-3"
-                className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Archive Item 3
               </Link>
@@ -121,7 +123,9 @@ export default function Nav() {
           {/* Labels Dropdown Menu */}
           <NavbarItem className="relative group">
             <button className="flex items-center space-x-2 color:foreground focus:outline-none">
-              <span>Labels</span>
+              <span className="group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-300 group-hover:to-purple-300 group-hover:dark:from-indigo-500 group-hover:dark:to-purple-500">
+                Labels
+              </span>
               <svg
                 className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-200"
                 xmlns="http://www.w3.org/2000/svg"
@@ -136,33 +140,33 @@ export default function Nav() {
                 />
               </svg>
             </button>
-            <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-2 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
+            <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-0 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
               <Link
                 href="/label-1"
-                className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Label Item 1
               </Link>
               <Link
                 href="/label-2"
-                className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Label Item 2
               </Link>
               <Link
                 href="/label-3"
-                className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                className="block px-4 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 dark:text-white"
               >
                 Label Item 3
               </Link>
             </div>
           </NavbarItem>
 
-          {/* Contact Link */}
+          {/* Other Navbar Items */}
           <NavbarItem>
             <Link
               href="/contact"
-              className="text-gray-700 dark:text-white hover:text-indigo-500 dark:hover:text-indigo-300"
+              className="relative inline-block pb-1 px-1 rounded-lg hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 dark:hover:from-indigo-500 dark:hover:to-purple-500 transition-all duration-300"
             >
               Contact
             </Link>
@@ -206,16 +210,27 @@ export default function Nav() {
 
       {/* Mobile View Menu */}
       {isMobileMenuOpen && (
-        <div className="sm:hidden absolute top-0 left-0 w-full bg-white dark:bg-black text-center py-4 z-40">
-          <div className="flex flex-col gap-4">
-            <Link href="/blogs" className="text-gray-700 dark:text-white">
+        <div className="sm:hidden absolute top-0 left-0 w-full bg-white dark:bg-black text-center py-6 z-40">
+          <div className="flex flex-col gap-6">
+            <Link
+              href="/blogs"
+              className="text-gray-700 dark:text-white hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-300 ease-in-out"
+              aria-label="Read Blogs"
+            >
               Read
             </Link>
-            <Link href="/contact" className="text-gray-700 dark:text-white">
+            <Link
+              href="/contact"
+              className="text-gray-700 dark:text-white hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-300 ease-in-out"
+              aria-label="Contact Us"
+            >
               Contact
             </Link>
             <div className="relative group">
-              <button className="flex items-center space-x-2">
+              <button
+                className="flex items-center space-x-2 text-gray-700 dark:text-white hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-300 ease-in-out"
+                aria-label="Toggle Archive Menu"
+              >
                 <span>Archive</span>
                 <svg
                   className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-200"
@@ -231,29 +246,35 @@ export default function Nav() {
                   />
                 </svg>
               </button>
-              <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-2 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
+              <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-0 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
                 <Link
                   href="/archive-1"
-                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800 transition-colors duration-300 ease-in-out"
+                  aria-label="Archive Item 1"
                 >
                   Archive Item 1
                 </Link>
                 <Link
                   href="/archive-2"
-                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800 transition-colors duration-300 ease-in-out"
+                  aria-label="Archive Item 2"
                 >
                   Archive Item 2
                 </Link>
                 <Link
                   href="/archive-3"
-                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800 transition-colors duration-300 ease-in-out"
+                  aria-label="Archive Item 3"
                 >
                   Archive Item 3
                 </Link>
               </div>
             </div>
             <div className="relative group">
-              <button className="flex items-center space-x-2">
+              <button
+                className="flex items-center space-x-2 text-gray-700 dark:text-white hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-300 ease-in-out"
+                aria-label="Toggle Labels Menu"
+              >
                 <span>Labels</span>
                 <svg
                   className="w-4 h-4 transform group-hover:rotate-180 transition-transform duration-200"
@@ -269,28 +290,31 @@ export default function Nav() {
                   />
                 </svg>
               </button>
-              <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-2 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
+              <div className="absolute hidden text-sm bg-white shadow-lg rounded-md right-0 mt-0 w-48 dark:bg-black group-hover:block transition-all duration-300 ease-out opacity-0 group-hover:opacity-100">
                 <Link
                   href="/label-1"
-                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800 transition-colors duration-300 ease-in-out"
+                  aria-label="Label Item 1"
                 >
                   Label Item 1
                 </Link>
                 <Link
                   href="/label-2"
-                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800 transition-colors duration-300 ease-in-out"
+                  aria-label="Label Item 2"
                 >
                   Label Item 2
                 </Link>
                 <Link
                   href="/label-3"
-                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800"
+                  className="block px-4 py-2 text-gray-700 hover:bg-indigo-200 dark:text-white dark:hover:bg-gray-800 transition-colors duration-300 ease-in-out"
+                  aria-label="Label Item 3"
                 >
                   Label Item 3
                 </Link>
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-4">
               <Switch
                 isSelected={theme === "dark"}
                 size="lg"
@@ -303,6 +327,7 @@ export default function Nav() {
                   )
                 }
                 onValueChange={toggleTheme}
+                aria-label="Toggle Dark/Light Theme"
               />
             </div>
           </div>

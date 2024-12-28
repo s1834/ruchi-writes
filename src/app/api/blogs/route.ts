@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import Blogs from "@/utils/models/blogs.models"; // Your Mongoose Blog model
+import Blogs from "@/utils/models/blogs.models";
 
 // Handle GET request to fetch either all blogs or a specific blog by ID
 export async function GET(req: Request) {
@@ -21,7 +21,7 @@ export async function GET(req: Request) {
       return NextResponse.json(blog, { status: 200 });
     } else {
       // If no 'id' is provided, fetch all blogs
-      const blogs = await Blogs.find(); // Retrieves all blog posts
+      const blogs = await Blogs.find();
       return NextResponse.json(blogs, { status: 200 });
     }
   } catch (err) {
@@ -43,13 +43,12 @@ export async function POST(req: Request) {
       content,
       tags = [],
       isFeatured = false,
-      readingTime,
       metaTitle,
       metaDescription,
       metaKeywords = [],
       image,
-      date = new Date(), // Default to current date if not provided
-      blogViews = 0, // Default to 0 if not provided
+      date = new Date(),
+      blogViews = 0,
     } = body;
 
     if (!title || !content) {
@@ -59,8 +58,14 @@ export async function POST(req: Request) {
       );
     }
 
-    // Generate slug by taking the first 100 characters of the content
-    const slug = content.substring(0, 100); // Take the first 100 characters as is
+    const slug = content.substring(0, 500);
+
+    // Calculate reading time
+    const wordsPerMinute = 200;
+    const averageWordLength = 5;
+    const readingTime = Math.ceil(
+      content.length / (averageWordLength * wordsPerMinute)
+    );
 
     // Create the new blog with optional date and blogViews
     const newBlog = await Blogs.create({
@@ -68,14 +73,14 @@ export async function POST(req: Request) {
       slug,
       content,
       tags,
-      blogViews, // Use the provided blogViews, default to 0
+      blogViews,
       isFeatured,
       readingTime,
       metaTitle,
       metaDescription,
       metaKeywords,
       image,
-      date, // Use the provided date, default to the current date
+      date,
     });
 
     return NextResponse.json(newBlog, { status: 201 });
@@ -99,7 +104,6 @@ export async function PUT(req: Request) {
       content,
       tags,
       isFeatured,
-      readingTime,
       metaTitle,
       metaDescription,
       metaKeywords,
@@ -115,7 +119,13 @@ export async function PUT(req: Request) {
       );
     }
 
-    // Increment the blogViews if no manual value is provided
+    // Calculate reading time
+    const wordsPerMinute = 200;
+    const averageWordLength = 5;
+    const readingTime = Math.ceil(
+      content.length / (averageWordLength * wordsPerMinute)
+    );
+
     const updatedBlog = await Blogs.findByIdAndUpdate(
       id,
       {
@@ -128,9 +138,9 @@ export async function PUT(req: Request) {
         metaDescription,
         metaKeywords,
         image,
-        date, // Set the date if provided
-        blogViews: blogViews !== undefined ? blogViews : undefined, // Set blogViews if provided, else it will not be updated
-        $inc: { blogViews: blogViews === undefined ? 1 : 0 }, // Increment blogViews by 1 if not manually set
+        date,
+        blogViews: blogViews !== undefined ? blogViews : undefined,
+        $inc: { blogViews: blogViews === undefined ? 1 : 0 },
       },
       { new: true }
     );
