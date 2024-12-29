@@ -88,7 +88,6 @@ const commentSchema = new mongoose.Schema(
   }
 );
 
-const Comments =
-  mongoose.models.Comments || mongoose.model("Comments", commentSchema);
+const Comment = mongoose.models.Comment || mongoose.model("Comment", commentSchema);
 
-export default Comments;
+export default Comment;

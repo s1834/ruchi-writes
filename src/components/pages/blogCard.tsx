@@ -24,7 +24,7 @@ export default function BlogCard({ blog }: { blog: BlogContent }) {
   const router = useRouter();
 
   const handleReadMore = () => {
-    router.push("/read");
+    router.push(`/read?id=${blog._id}`);
   };
 
   return (

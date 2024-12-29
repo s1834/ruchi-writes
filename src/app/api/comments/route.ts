@@ -14,7 +14,9 @@ export async function GET(req: Request) {
       );
     }
 
-    const comments = await Comments.find({ blogId });
+    const comments = await Comments.find({ blogId })
+      .populate("replies") // Populate replies for each comment
+      .populate("parentComment"); // Populate parent comments, if applicable
 
     if (comments.length === 0) {
       return NextResponse.json(
@@ -41,10 +43,11 @@ export async function GET(req: Request) {
   }
 }
 
-// POST new comment
+// POST new comment or reply
 export async function POST(req: Request) {
   try {
-    const { blogId, name, email, content, guest, randomPic } = await req.json();
+    const { blogId, name, email, content, guest, randomPic, parentComment } =
+      await req.json();
 
     const newComment = await Comments.create({
       blogId,
@@ -55,7 +58,15 @@ export async function POST(req: Request) {
       randomPic:
         randomPic ||
         "https://images.unsplash.com/photo-1475874619827-b5f0310b6e6f?q=80&w=4000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      parentComment,
     });
+
+    // If it's a reply, push it to the parent comment's replies
+    if (parentComment) {
+      await Comments.findByIdAndUpdate(parentComment, {
+        $push: { replies: newComment._id },
+      });
+    }
 
     return NextResponse.json(newComment, { status: 201 });
   } catch (err: unknown) {
@@ -159,6 +170,13 @@ export async function DELETE(req: Request) {
         { message: "Comment not found" },
         { status: 404 }
       );
+    }
+
+    // Remove the comment from its parent's replies if applicable
+    if (deletedComment.parentComment) {
+      await Comments.findByIdAndUpdate(deletedComment.parentComment, {
+        $pull: { replies: commentId },
+      });
     }
 
     return NextResponse.json(
