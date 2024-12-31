@@ -1,7 +1,8 @@
 "use client";
 import BlogCard from "@/components/pages/blogCard";
 import { useEffect, useState } from "react";
-import MoreBlogCard from "@/components/pages/moreBlogCard";
+import Nav from "@/app/navbar/page";
+import Contact from "@/app/contact/page";
 
 interface BlogContent {
   _id: string;
@@ -20,7 +21,7 @@ interface BlogContent {
   image?: string;
 }
 
-export default function Blogs() {
+export default function All() {
   const [blogContent, setBlogContent] = useState<BlogContent[]>([]);
 
   useEffect(() => {
@@ -41,13 +42,14 @@ export default function Blogs() {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
-      {blogContent.map((blog, index) => (
-        <BlogCard key={index} blog={blog} />
-      ))}
-      <div>
-        <MoreBlogCard />
+    <div>
+      <Nav />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
+        {blogContent.map((blog) => (
+          <BlogCard key={blog._id} blog={blog} />
+        ))}
       </div>
+      <Contact />
     </div>
   );
 }

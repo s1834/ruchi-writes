@@ -1,5 +1,4 @@
-
-'use client';
+"use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { calsans } from "@/app/fonts/calsans";
@@ -24,7 +23,6 @@ interface BlogContent {
   metaTitle?: string;
   metaDescription?: string;
   metaKeywords?: string[];
-  followers?: string[];
   comments?: string[];
   image?: string;
 }
@@ -39,7 +37,7 @@ export default function Read() {
   useEffect(() => {
     if (blogId) {
       // Fetch blog data for the specific blogId
-      fetch(`http://localhost:3000/api/blogs?id=${blogId}`)
+      fetch(`http://localhost:3000/api/read?id=${blogId}`)
         .then((response) => response.json())
         .then((data: BlogContent) => setBlogContent(data))
         .catch((error) => console.error("Error fetching blog data:", error));
@@ -75,7 +73,7 @@ export default function Read() {
                 />
               </div>
 
-             {/* Date and Tags */}
+              {/* Date and Tags */}
               <div className="flex items-center text-sm text-gray-500 mb-4">
                 <span>
                   {new Date(blogContent.date).toLocaleDateString("en-US", {
@@ -85,14 +83,19 @@ export default function Read() {
                   })}
                 </span>
                 <span className="mx-2">•</span>
-                {blogContent.tags?.slice(0, 3).map((tag, i) => ( // Limit to 3 tags
-                  <span
-                    key={i}
-                    className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-xs mr-2"
-                  >
-                    {tag}
-                  </span>
-                ))}
+                {blogContent.tags?.slice(0, 3).map(
+                  (
+                    tag,
+                    i // Limit to 3 tags
+                  ) => (
+                    <span
+                      key={i}
+                      className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-xs mr-2"
+                    >
+                      {tag}
+                    </span>
+                  )
+                )}
               </div>
 
               {/* Blog Image and Content */}
@@ -106,8 +109,13 @@ export default function Read() {
                     className="rounded-lg mb-10 object-cover"
                   />
                 )}
-                <p className="text-2xl leading-relaxed"> {/* Increased text size */}
-                  {blogContent.content}
+                <p className="text-2xl leading-relaxed">
+                  {blogContent.content.split("\n").map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
                 </p>
               </div>
 
@@ -127,7 +135,9 @@ export default function Read() {
               </div>
 
               {/* Comment Section */}
-              {isCommentsVisible && blogId && <CommentSection blogId={blogId} />}
+              {isCommentsVisible && blogId && (
+                <CommentSection blogId={blogId} />
+              )}
             </div>
           </div>
         </TracingBeam>

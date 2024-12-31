@@ -15,7 +15,6 @@ interface BlogContent {
   metaTitle?: string;
   metaDescription?: string;
   metaKeywords?: string[];
-  followers?: string[];
   comments?: string[];
   image?: string;
 }

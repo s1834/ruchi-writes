@@ -1,46 +1,66 @@
 import { NextResponse } from "next/server";
 import Blogs from "@/utils/models/blogs.models";
 
-// Handle GET request to fetch either all blogs or a specific blog by ID
+// GET all blogs
+/**
+ * @swagger
+ * /api/blogs:
+ *   get:
+ *     summary: Fetch all blogs
+ *     tags: [Blogs]
+ *     responses:
+ *       200:
+ *         description: A list of blogs
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   slug:
+ *                     type: string
+ *                   date:
+ *                     type: string
+ *                     format: date-time
+ *                   content:
+ *                     type: string
+ *                   tags:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                   blogViews:
+ *                     type: integer
+ *                   isFeatured:
+ *                     type: boolean
+ *                   readingTime:
+ *                     type: integer
+ *                   metaTitle:
+ *                     type: string
+ *                   metaDescription:
+ *                     type: string
+ *                   metaKeywords:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                   comments:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                   image:
+ *                     type: string
+ *       500:
+ *         description: Internal server error
+ */
 export async function GET(req: Request) {
   try {
-    const { searchParams } = new URL(req.url);
-    const blogId = searchParams.get("id");
+    const blogs = await Blogs.find();
 
-    if (blogId) {
-      // If an 'id' query parameter is present, fetch the specific blog by ID
-      const blog = await Blogs.findById(blogId);
-
-      if (!blog) {
-        return NextResponse.json(
-          { message: "Blog not found" },
-          { status: 404 }
-        );
-      }
-
-      return NextResponse.json(blog, { status: 200 });
-    } else {
-      // Fetch top 7 blogs with most views and mark them as featured
-      const topBlogs = await Blogs.find()
-        .sort({ blogViews: -1 }) // Sort blogs by most viewed (descending)
-        .limit(7); // Limit to top 7 blogs
-
-      // Update top blogs to be featured
-      const featuredBlogs = await Promise.all(
-        topBlogs.map((blog) => {
-          return Blogs.findByIdAndUpdate(
-            blog._id,
-            { isFeatured: true },
-            { new: true }
-          );
-        })
-      );
-
-      // Fetch all blogs
-      const blogs = await Blogs.find();
-
-      return NextResponse.json(blogs, { status: 200 });
-    }
+    return NextResponse.json(blogs, { status: 200 });
   } catch (err) {
     console.error(err);
     return NextResponse.json(
@@ -51,6 +71,92 @@ export async function GET(req: Request) {
 }
 
 // POST new blog
+/**
+ * @swagger
+ * /api/blogs:
+ *   post:
+ *     summary: Create a new blog post
+ *     tags: [Blogs]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - content
+ *             properties:
+ *               title:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               isFeatured:
+ *                 type: boolean
+ *               metaTitle:
+ *                 type: string
+ *               metaDescription:
+ *                 type: string
+ *               metaKeywords:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               image:
+ *                 type: string
+ *               date:
+ *                 type: string
+ *               blogViews:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Blog created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 title:
+ *                   type: string
+ *                 slug:
+ *                   type: string
+ *                 date:
+ *                   type: string
+ *                   format: date-time
+ *                 content:
+ *                   type: string
+ *                 tags:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 blogViews:
+ *                   type: integer
+ *                 isFeatured:
+ *                   type: boolean
+ *                 readingTime:
+ *                   type: integer
+ *                 metaTitle:
+ *                   type: string
+ *                 metaDescription:
+ *                   type: string
+ *                 metaKeywords:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 comments:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 image:
+ *                   type: string
+ *       400:
+ *         description: Failed to create blog
+ */
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -109,6 +215,89 @@ export async function POST(req: Request) {
 }
 
 // PUT/Update an existing blog
+/**
+ * @swagger
+ * /api/blogs/{id}:
+ *   put:
+ *     summary: Update an existing blog by ID
+ *     tags: [Blogs]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the blog to update
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               isFeatured:
+ *                 type: boolean
+ *               metaTitle:
+ *                 type: string
+ *               metaDescription:
+ *                 type: string
+ *               metaKeywords:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               image:
+ *                 type: string
+ *               date:
+ *                 type: string
+ *               blogViews:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Blog updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 title:
+ *                   type: string
+ *                 content:
+ *                   type: string
+ *                 tags:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 isFeatured:
+ *                   type: boolean
+ *                 readingTime:
+ *                   type: integer
+ *                 metaTitle:
+ *                   type: string
+ *                 metaDescription:
+ *                   type: string
+ *                 metaKeywords:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 image:
+ *                   type: string
+ *                 date:
+ *                   type: string
+ *                 blogViews:
+ *                   type: integer
+ *       400:
+ *         description: Failed to update blog
+ */
 export async function PUT(req: Request) {
   try {
     const { id } = req.url.match(/\/([a-fA-F0-9]{24})$/)!.groups!;
@@ -175,6 +364,89 @@ export async function PUT(req: Request) {
 }
 
 // PATCH Partially update an existing blog
+/**
+ * @swagger
+ * /api/blogs/{id}:
+ *   patch:
+ *     summary: Partially update an existing blog by ID
+ *     tags: [Blogs]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the blog to update
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               isFeatured:
+ *                 type: boolean
+ *               metaTitle:
+ *                 type: string
+ *               metaDescription:
+ *                 type: string
+ *               metaKeywords:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               image:
+ *                 type: string
+ *               date:
+ *                 type: string
+ *               blogViews:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Blog partially updated successfully and returned with the updated data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 title:
+ *                   type: string
+ *                 content:
+ *                   type: string
+ *                 tags:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 isFeatured:
+ *                   type: boolean
+ *                 readingTime:
+ *                   type: integer
+ *                 metaTitle:
+ *                   type: string
+ *                 metaDescription:
+ *                   type: string
+ *                 metaKeywords:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 image:
+ *                   type: string
+ *                 date:
+ *                   type: string
+ *                 blogViews:
+ *                   type: integer
+ *       400:
+ *         description: Failed to update blog
+ */
 export async function PATCH(req: Request) {
   try {
     const { id } = req.url.match(/\/([a-fA-F0-9]{24})$/)!.groups!;
@@ -197,13 +469,32 @@ export async function PATCH(req: Request) {
   } catch (err) {
     console.error(err);
     return NextResponse.json(
-      { message: "Failed to patch blog", error: (err as Error).message },
-      { status: 400 }
+      { message: "Failed to update blog", error: (err as Error).message },
+      { status: 500 }
     );
   }
 }
 
-// Delete a blog by ID
+// DELETE a blog by ID
+/**
+ * @swagger
+ * /api/blogs/{id}:
+ *   delete:
+ *     summary: Delete an existing blog by ID
+ *     tags: [Blogs]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the blog to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Blog deleted successfully
+ *       500:
+ *         description: Failed to delete blog
+ */
 export async function DELETE(req: Request) {
   try {
     const { id } = req.url.match(/\/([a-fA-F0-9]{24})$/)!.groups!;
@@ -222,7 +513,7 @@ export async function DELETE(req: Request) {
     console.error(err);
     return NextResponse.json(
       { message: "Failed to delete blog", error: (err as Error).message },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }
