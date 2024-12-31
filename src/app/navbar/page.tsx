@@ -15,6 +15,7 @@ import { SunIcon } from "@/components/icons/SunIcon";
 export default function Nav() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [followState, setFollowState] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -38,6 +39,17 @@ export default function Nav() {
 
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleFollowClick = () => {
+    if (followState) {
+      if (window.confirm("Are you sure you want to unfollow??")) {
+        setFollowState(false);
+      }
+    } else {
+      setFollowState(true);
+      alert("Thank You for Following!!");
+    }
   };
 
   return (
@@ -197,9 +209,14 @@ export default function Nav() {
 
           {/* Follow Button */}
           <NavbarItem>
-            <button className="px-8 py-2 rounded-full relative bg-slate-700 text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600">
+            <button
+              className="px-8 py-2 rounded-full relative bg-slate-700 text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600"
+              onClick={handleFollowClick}
+            >
               <div className="absolute inset-x-0 h-px w-1/2 mx-auto -top-px shadow-2xl  bg-gradient-to-r from-transparent via-teal-500 to-transparent" />
-              <span className="relative z-20">Follow</span>
+              <span className="relative z-20">
+                {followState ? "Following" : "Follow"}
+              </span>
             </button>
           </NavbarItem>
 

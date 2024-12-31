@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import Home from "@/utils/models/home.models";
+import DBInstance from "@/utils/db/server";
+
+DBInstance();
 
 export async function GET(req: Request) {
   try {

@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import Blogs from "@/utils/models/blogs.models";
+import DBInstance from "@/utils/db/server";
+
+DBInstance();
 
 // GET all blogs
 /**

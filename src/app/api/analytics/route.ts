@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import Analytics from "@/utils/models/analytics.models";
+import DBInstance from "@/utils/db/server";
+
+DBInstance();
 
 // GET analytics data for a specific blog
 export async function GET(req: Request) {

@@ -12,8 +12,6 @@ const MONGO_URI = process.env.DATABASE_URI.replace(
 const DBInstance = async () => {
   try {
     await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
     });

@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import Users from "@/utils/models/users.models";
 import { URL } from "url";
+import DBInstance from "@/utils/db/server";
+
+DBInstance();
 
 // GET user by userId, googleId, or email
 export async function GET(req: Request) {

@@ -111,12 +111,16 @@ export default function All() {
   }, [selectedYear, selectedMonth, selectedTag, sortBy, blogContent]);
 
   return (
-    <div className="bg-white dark:bg-neutral-950">
-      <Nav />
-      <div className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto mt-20">
+    <div className="pt-20 bg-white dark:bg-neutral-950">
+      <div className="fixed top-0 left-0 w-full">
+        <Nav />
+      </div>
+
+      <div className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto mt-0">
         <Highlight className="text-black dark:text-white">Blogs</Highlight>
         <TextGenerateEffect words={words} />
       </div>
+
       {/* Filter and Sort Section */}
       <div className="p-4">
         <div className="flex flex-wrap sm:flex-nowrap items-center gap-4">

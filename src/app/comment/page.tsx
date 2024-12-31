@@ -30,11 +30,12 @@ interface Comment {
 }
 
 export default function CommentSection({ blogId }: { blogId: string }) {
-  
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const [replyText, setReplyText] = useState<{ [key: string]: string }>({});
-  const [expandedReplies, setExpandedReplies] = useState<Set<string>>(new Set());
+  const [expandedReplies, setExpandedReplies] = useState<Set<string>>(
+    new Set()
+  );
   const [activeReplyId, setActiveReplyId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -76,7 +77,8 @@ export default function CommentSection({ blogId }: { blogId: string }) {
     if (replyText[parentId]?.trim()) {
       setComments((prevComments) =>
         prevComments.map((comment) =>
-          comment.id === parentId || comment.replies.some((r) => r.parentComment === parentId)
+          comment.id === parentId ||
+          comment.replies.some((r) => r.parentComment === parentId)
             ? {
                 ...comment,
                 replies: [
@@ -114,7 +116,11 @@ export default function CommentSection({ blogId }: { blogId: string }) {
     });
   };
 
-  const toggleLike = (id: string, isReply: boolean = false, parentId?: string) => {
+  const toggleLike = (
+    id: string,
+    isReply: boolean = false,
+    parentId?: string
+  ) => {
     setComments((prevComments) =>
       prevComments.map((comment) => {
         if (isReply) {
@@ -188,7 +194,10 @@ export default function CommentSection({ blogId }: { blogId: string }) {
               {expandedReplies.has(comment.id) && (
                 <div className="mt-3 space-y-2">
                   {comment.replies.map((reply, index) => (
-                    <div key={index} className="ml-6 flex items-start space-x-2">
+                    <div
+                      key={index}
+                      className="ml-6 flex items-start space-x-2"
+                    >
                       <img
                         src={reply.randomPic}
                         alt="Reply User"
@@ -205,16 +214,24 @@ export default function CommentSection({ blogId }: { blogId: string }) {
                             }
                             className="flex items-center text-red-500 hover:text-red-800 cursor-pointer mt-1"
                           >
-                            {reply.replyLikeCount > 0 ? <FaHeart /> : <FaRegHeart />}
+                            {reply.replyLikeCount > 0 ? (
+                              <FaHeart />
+                            ) : (
+                              <FaRegHeart />
+                            )}
                             {reply.replyLikeCount > 0 && (
-                              <span className="ml-1">{reply.replyLikeCount}</span>
+                              <span className="ml-1">
+                                {reply.replyLikeCount}
+                              </span>
                             )}
                           </div>
                         </div>
                         <p className="text-gray-700">{reply.text}</p>
                         <div className="mt-2 text-sm">
                           <button
-                            onClick={() => setActiveReplyId(reply.parentComment)}
+                            onClick={() =>
+                              setActiveReplyId(reply.parentComment)
+                            }
                             className="text-gray-500 hover:text-gray-700"
                           >
                             Reply
@@ -291,5 +308,19 @@ export default function CommentSection({ blogId }: { blogId: string }) {
     </div>
   );
 }
+// import React from "react";
 
+// const CommentPage: React.FC = () => {
+//   return (
+//     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-neutral-900">
+//       <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+//         Coming Soon
+//       </h1>
+//       <p className="text-lg text-gray-600 dark:text-gray-400">
+//         We're working hard to bring this feature to you. Stay tuned!!
+//       </p>
+//     </div>
+//   );
+// };
 
+// export default CommentPage;

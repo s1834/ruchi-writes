@@ -21,32 +21,27 @@ export async function GET(req: Request) {
       return NextResponse.json(blog, { status: 200 });
     } else {
       // Fetch top 7 blogs with most views and mark them as featured
-    //   const topBlogs = await Blogs.find()
-    //     .sort({ blogViews: -1 }) // Sort blogs by most viewed (descending)
-    //     .limit(7); // Limit to top 7 blogs
+      //   const topBlogs = await Blogs.find()
+      //     .sort({ blogViews: -1 }) // Sort blogs by most viewed (descending)
+      //     .limit(7); // Limit to top 7 blogs
 
-    //   // Update top blogs to be featured
-    //   const featuredBlogs = await Promise.all(
-    //     topBlogs.map((blog) => {
-    //       return Blogs.findByIdAndUpdate(
-    //         blog._id,
-    //         { isFeatured: true },
-    //         { new: true }
-    //       );
-        // })
-    //   );
-
+      //   // Update top blogs to be featured
+      //   const featuredBlogs = await Promise.all(
+      //     topBlogs.map((blog) => {
+      //       return Blogs.findByIdAndUpdate(
+      //         blog._id,
+      //         { isFeatured: true },
+      //         { new: true }
+      //       );
+      // })
+      //   );
 
       // Fetch all blogs
-    //   const blogs = await Blogs.find();
+      //   const blogs = await Blogs.find();
 
-    //   return NextResponse.json(blogs, { status: 200 });
+      //   return NextResponse.json(blogs, { status: 200 });
 
-    return NextResponse.json(
-        { message: "Blog not found" },
-        { status: 404 }
-      );
-
+      return NextResponse.json({ message: "Blog not found" }, { status: 404 });
     }
   } catch (err) {
     console.error(err);

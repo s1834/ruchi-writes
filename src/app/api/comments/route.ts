@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import Comments from "@/utils/models/comments.models";
+import DBInstance from "@/utils/db/server";
+
+DBInstance();
 
 // GET comments for a specific blog
 export async function GET(req: Request) {

@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import Emails from "@/utils/models/emails.models";
+import DBInstance from "@/utils/db/server";
+
+DBInstance();
 
 // GET all emails
 export async function GET(req: Request) {
