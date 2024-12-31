@@ -5,8 +5,15 @@ import {
   GlowingStarsDescription,
   GlowingStarsTitle,
 } from "@/components/ui/glowing-stars";
+import { useRouter } from "next/navigation";
 
 export default function MoreBlogCard() {
+  const router = useRouter();
+
+  const handleReadMore = () => {
+    router.push(`/all`);
+  };
+
   return (
     <div className="flex items-center justify-center antialiased">
       <GlowingStarsBackgroundCard>
@@ -19,7 +26,9 @@ export default function MoreBlogCard() {
             blogs.
           </GlowingStarsDescription>
           <div className="h-8 w-8 rounded-full bg-[hsla(0,0%,100%,.1)] flex items-center justify-center">
-            <Icon />
+            <button onClick={handleReadMore}>
+              <Icon />
+            </button>
           </div>
         </div>
       </GlowingStarsBackgroundCard>

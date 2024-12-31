@@ -88,7 +88,7 @@ export default function Contact() {
   return (
     <div
       className="flex flex-col md:flex-row items-center justify-center py-20 sm:mt-32 md:mt-16 h-auto md:h-auto dark:bg-neutral-950 bg-white relative w-full space-y-8 md:space-y-0 md:space-x-8 gap-28"
-      id="Contact"
+      id="contact"
     >
       <div className="flex-1 flex flex-col items-start justify-center space-y-8 w-full max-w-lg">
         <p className="dark:text-white text-black text-[3.5rem] font-semibold">

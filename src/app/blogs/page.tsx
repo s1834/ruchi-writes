@@ -30,7 +30,7 @@ export default function Blogs() {
         const blogs = await response.json();
 
         if (Array.isArray(blogs)) {
-          setBlogContent(blogs);
+          setBlogContent(blogs.slice(0, 7));
         }
       } catch (error) {
         console.error("Error fetching blog data", error);

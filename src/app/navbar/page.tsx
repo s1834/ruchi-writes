@@ -94,7 +94,7 @@ export default function Nav() {
         <NavbarContent className="hidden sm:flex gap-8 justify-center">
           <NavbarItem>
             <Link
-              href="/blogs"
+              href="/all"
               className="relative inline-block pb-1 px-2 rounded-lg hover:bg-gradient-to-r hover:from-purple-300 hover:to-indigo-300 dark:hover:from-purple-500 dark:hover:to-indigo-500 transition-opacity duration-300"
             >
               Read
@@ -188,7 +188,7 @@ export default function Nav() {
           {/* Other Navbar Items */}
           <NavbarItem>
             <Link
-              href="/contact"
+              href="#contact"
               className="relative inline-block pb-1 px-2 rounded-lg hover:bg-gradient-to-r hover:from-purple-300 hover:to-indigo-300 dark:hover:from-purple-500 dark:hover:to-indigo-500 transition-opacity duration-300"
             >
               Contact
@@ -240,7 +240,7 @@ export default function Nav() {
           <div className="flex flex-col gap-6 px-4 md:px-8">
             {/* Link to Blogs */}
             <Link
-              href="/blogs"
+              href="/all"
               className="relative inline-block pb-1 px-2 rounded-lg hover:bg-gradient-to-r hover:from-purple-300 hover:to-indigo-300 dark:hover:from-purple-500 dark:hover:to-indigo-500 transition-opacity duration-300 transform hover:scale-105"
             >
               Read
@@ -248,7 +248,7 @@ export default function Nav() {
 
             {/* Link to Contact */}
             <Link
-              href="/contact"
+              href="#contact"
               className="relative inline-block pb-1 px-2 rounded-lg hover:bg-gradient-to-r hover:from-purple-300 hover:to-indigo-300 dark:hover:from-purple-500 dark:hover:to-indigo-500 transition-opacity duration-300 transform hover:scale-105"
             >
               Contact
