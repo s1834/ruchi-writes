@@ -30,6 +30,7 @@ interface BlogContent {
 export default function Read() {
   const [blogContent, setBlogContent] = useState<BlogContent | null>(null);
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
+  const [likeCount, setLikeCount] = useState(0); // Track like count
   const searchParams = useSearchParams();
 
   const blogId = searchParams.get("id");
@@ -43,6 +44,10 @@ export default function Read() {
         .catch((error) => console.error("Error fetching blog data:", error));
     }
   }, [blogId]);
+
+  const handleLike = () => {
+    setLikeCount((prevCount) => prevCount + 1); // Increment like count
+  };
 
   if (!blogContent) {
     return (
@@ -62,9 +67,13 @@ export default function Read() {
         <TracingBeam className="px-6">
           <div className="max-w-2xl mx-auto antialiased pt-4 relative">
             <div className="mb-10">
-              {/* Title and Share Icon */}
               <div className="flex items-center justify-between mb-2">
-                <p className={twMerge(calsans.className, "text-2xl font-bold")}>
+                <p
+                  className={twMerge(
+                    calsans.className,
+                    "text-4xl font-bold hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-indigo-300 hover:to-purple-300 hover:dark:from-indigo-500 hover:dark:to-purple-500"
+                  )}
+                >
                   {blogContent.title}
                 </p>
                 <FaShareAlt
@@ -73,7 +82,6 @@ export default function Read() {
                 />
               </div>
 
-              {/* Date and Tags */}
               <div className="flex items-center text-sm text-gray-500 mb-4">
                 <span>
                   {new Date(blogContent.date).toLocaleDateString("en-US", {
@@ -83,22 +91,16 @@ export default function Read() {
                   })}
                 </span>
                 <span className="mx-2">•</span>
-                {blogContent.tags?.slice(0, 3).map(
-                  (
-                    tag,
-                    i // Limit to 3 tags
-                  ) => (
-                    <span
-                      key={i}
-                      className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-xs mr-2"
-                    >
-                      {tag}
-                    </span>
-                  )
-                )}
+                {blogContent.tags?.slice(0, 3).map((tag, i) => (
+                  <span
+                    key={i}
+                    className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-sm font-bold mr-2 "
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
 
-              {/* Blog Image and Content */}
               <div className="text-sm prose prose-sm dark:prose-invert">
                 {blogContent.image && (
                   <Image
@@ -120,19 +122,27 @@ export default function Read() {
               </div>
 
               {/* Like and Comment Buttons */}
-              <div className="flex justify-between items-center mt-6">
+              <div className="flex justify-start items-center mt-6">
                 <div className="flex items-center gap-6">
                   <FaHeart
                     title="Like"
                     className="text-lg cursor-pointer hover:text-red-600"
+                    onClick={handleLike}
                   />
                   <FaComment
                     title="Comment"
-                    className="text-lg cursor-pointer hover:text-green-600"
+                    className="text-lg cursor-pointer hover:text-gray-600"
                     onClick={() => setIsCommentsVisible((prev) => !prev)}
                   />
                 </div>
               </div>
+
+              {/* Like Count Display */}
+              {likeCount > 0 && (
+                <div className="text-sm text-gray-500 mt-2">
+                  {likeCount === 1 ? "1 like" : `${likeCount} likes`}
+                </div>
+              )}
 
               {/* Comment Section */}
               {isCommentsVisible && blogId && (
