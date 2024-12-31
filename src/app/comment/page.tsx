@@ -1,5 +1,7 @@
+"use client";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 interface Reply {
   name: string;
@@ -28,6 +30,7 @@ interface Comment {
 }
 
 export default function CommentSection({ blogId }: { blogId: string }) {
+  
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const [replyText, setReplyText] = useState<{ [key: string]: string }>({});
@@ -288,3 +291,5 @@ export default function CommentSection({ blogId }: { blogId: string }) {
     </div>
   );
 }
+
+
