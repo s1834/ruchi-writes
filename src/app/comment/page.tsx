@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { useRouter } from "next/router";
 
 interface Reply {
   name: string;
@@ -12,7 +11,6 @@ interface Reply {
   date: string;
   replyLikeCount: number;
   parentComment: string;
-  replies: Reply[];
 }
 
 interface Comment {
@@ -77,8 +75,7 @@ export default function CommentSection({ blogId }: { blogId: string }) {
     if (replyText[parentId]?.trim()) {
       setComments((prevComments) =>
         prevComments.map((comment) =>
-          comment.id === parentId ||
-          comment.replies.some((r) => r.parentComment === parentId)
+          comment.id === parentId
             ? {
                 ...comment,
                 replies: [
@@ -92,7 +89,6 @@ export default function CommentSection({ blogId }: { blogId: string }) {
                     date: new Date().toISOString(),
                     replyLikeCount: 0,
                     parentComment: parentId,
-                    replies: [],
                   },
                 ],
               }
@@ -143,9 +139,17 @@ export default function CommentSection({ blogId }: { blogId: string }) {
     );
   };
 
+  // Calculate total comment count dynamically
+  const totalCommentCount = comments.reduce(
+    (count, comment) => count + 1 + comment.replies.length,
+    0
+  );
+
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <h3 className="font-bold text-lg mb-4 text-gray-700">Comments</h3>
+      <h3 className="font-bold text-lg mb-4 text-gray-700">
+        Comments ({totalCommentCount})
+      </h3>
       <div className="space-y-4">
         {comments.map((comment) => (
           <div key={comment.id} className="flex items-start space-x-3">
@@ -196,14 +200,14 @@ export default function CommentSection({ blogId }: { blogId: string }) {
                   {comment.replies.map((reply, index) => (
                     <div
                       key={index}
-                      className="ml-6 flex items-start space-x-2"
+                      className="ml-6 flex items-start space-x-2 bg-transparent"
                     >
                       <img
                         src={reply.randomPic}
                         alt="Reply User"
                         className="w-8 h-8 rounded-full"
                       />
-                      <div className="bg-gray-100 p-2 rounded-lg flex-1">
+                      <div className="p-2 rounded-lg flex-1">
                         <div className="flex justify-between items-center">
                           <p className="font-semibold text-gray-700">
                             {reply.name}
@@ -227,45 +231,13 @@ export default function CommentSection({ blogId }: { blogId: string }) {
                           </div>
                         </div>
                         <p className="text-gray-700">{reply.text}</p>
-                        <div className="mt-2 text-sm">
-                          <button
-                            onClick={() =>
-                              setActiveReplyId(reply.parentComment)
-                            }
-                            className="text-gray-500 hover:text-gray-700"
-                          >
-                            Reply
-                          </button>
-                        </div>
-                        {activeReplyId === reply.parentComment && (
-                          <div className="mt-3">
-                            <input
-                              type="text"
-                              placeholder="Write a reply..."
-                              value={replyText[reply.parentComment] || ""}
-                              onChange={(e) =>
-                                setReplyText((prev) => ({
-                                  ...prev,
-                                  [reply.parentComment]: e.target.value,
-                                }))
-                              }
-                              className="w-full border border-gray-300 rounded-lg p-2 text-sm text-black focus:outline-none"
-                            />
-                            <button
-                              onClick={() => addReply(reply.parentComment)}
-                              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600"
-                            >
-                              Post Reply
-                            </button>
-                          </div>
-                        )}
                       </div>
                     </div>
                   ))}
                 </div>
               )}
               {activeReplyId === comment.id && (
-                <div className="mt-3">
+                <div className="mt-3 flex items-center space-x-2">
                   <input
                     type="text"
                     placeholder="Write a reply..."
@@ -276,13 +248,13 @@ export default function CommentSection({ blogId }: { blogId: string }) {
                         [comment.id]: e.target.value,
                       }))
                     }
-                    className="w-full border border-gray-300 rounded-lg p-2 text-sm text-black focus:outline-none"
+                    className="border border-gray-300 rounded-lg p-2 text-sm text-black focus:outline-none w-full"
                   />
                   <button
                     onClick={() => addReply(comment.id)}
-                    className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600"
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600"
                   >
-                    Post Reply
+                    Post
                   </button>
                 </div>
               )}
@@ -308,19 +280,3 @@ export default function CommentSection({ blogId }: { blogId: string }) {
     </div>
   );
 }
-// import React from "react";
-
-// const CommentPage: React.FC = () => {
-//   return (
-//     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-neutral-900">
-//       <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-//         Coming Soon
-//       </h1>
-//       <p className="text-lg text-gray-600 dark:text-gray-400">
-//         We're working hard to bring this feature to you. Stay tuned!!
-//       </p>
-//     </div>
-//   );
-// };
-
-// export default CommentPage;
