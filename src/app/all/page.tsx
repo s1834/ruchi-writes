@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import BlogCard from "@/components/pages/blogCard";
 import { useEffect, useState } from "react";
 import Nav from "@/app/navbar/page";
