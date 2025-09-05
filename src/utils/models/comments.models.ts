@@ -1,93 +1,119 @@
-import mongoose from "@/utils/db/mongooseInstance";
+import mongoose, { Model, Schema } from "mongoose";
+import { IComment } from "@/types/shared";
 
-const commentSchema = new mongoose.Schema(
+const commentSchema = new Schema<IComment>(
   {
     blogId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Blog",
       required: true,
     },
     name: {
       type: String,
       required: [true, "A comment must have a name"],
+      default: "Guest User",
     },
     email: {
       type: String,
-    },
-    guest: {
-      type: Boolean,
-      default: true,
-    },
-    randomPic: {
-      type: String,
-      default:
-        "https://images.unsplash.com/photo-1475874619827-b5f0310b6e6f?q=80&w=4000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      default: "guest@example.com",
     },
     content: {
       type: String,
       required: [true, "A comment must have content"],
     },
-    date: {
-      type: Date,
-      default: Date.now,
+    parentComment: {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+      default: null,
     },
     replies: [
       {
-        name: {
-          type: String,
-          required: [true, "A reply must have a name"],
-        },
-        email: {
-          type: String,
-        },
-        guest: {
-          type: Boolean,
-          default: true,
-        },
-        randomPic: {
-          type: String,
-          default:
-            "https://images.unsplash.com/photo-1475874619827-b5f0310b6e6f?q=80&w=4000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        },
-        text: {
-          type: String,
-          required: true,
-        },
-        date: {
-          type: Date,
-          default: Date.now,
-        },
-        replyLikeCount: {
-          type: Number,
-          default: 0,
-        },
-        parentComment: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Comment", // Reference to the parent comment
-        },
-        // Nested replies
-        replies: [
-          {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Comment", // Allows recursive referencing of replies
-          },
-        ],
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
       },
     ],
-    commentLikeCount: {
-      type: Number,
-      default: 0,
-    },
-    parentComment: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment", // References a parent comment, if the comment itself is a reply
-    },
   },
   {
     collection: "comments",
+    timestamps: true, // Adds createdAt and updatedAt timestamps
   }
 );
 
-const Comment = mongoose.models.Comment || mongoose.model("Comment", commentSchema);
+// Check if the model is already compiled before defining it
+const Comment: Model<IComment> =
+  mongoose.models.Comment || mongoose.model<IComment>("Comment", commentSchema);
 
 export default Comment;
+
+// import mongoose, { Schema, Document, Model } from "mongoose";
+
+// // Interface for our Comment document
+// export interface IComment extends Document {
+//   blogId: Schema.Types.ObjectId;
+//   name: string;
+//   email?: string;
+//   guest: boolean;
+//   randomPic: string;
+//   content: string;
+//   date: Date;
+//   commentLikeCount: number;
+//   parentComment?: Schema.Types.ObjectId;
+//   replies: Schema.Types.ObjectId[];
+// }
+
+// const commentSchema = new Schema<IComment>(
+//   {
+//     blogId: {
+//       type: Schema.Types.ObjectId,
+//       ref: "Blog",
+//       required: true,
+//     },
+//     name: {
+//       type: String,
+//       required: [true, "A comment must have a name"],
+//     },
+//     email: {
+//       type: String,
+//     },
+//     guest: {
+//       type: Boolean,
+//       default: true,
+//     },
+//     randomPic: {
+//       type: String,
+//       default: "https://source.unsplash.com/random/100x100/?portrait",
+//     },
+//     content: {
+//       type: String,
+//       required: [true, "A comment must have content"],
+//     },
+//     date: {
+//       type: Date,
+//       default: Date.now,
+//     },
+//     commentLikeCount: {
+//       type: Number,
+//       default: 0,
+//     },
+//     parentComment: {
+//       type: Schema.Types.ObjectId,
+//       ref: "Comment",
+//     },
+//     replies: [
+//       {
+//         type: Schema.Types.ObjectId,
+//         ref: "Comment",
+//       },
+//     ],
+//   },
+//   {
+//     collection: "comments",
+//     timestamps: true,
+//   }
+// );
+
+// // Prevent model recompilation in Next.js
+// const Comment: Model<IComment> =
+//   mongoose.models.Comment || mongoose.model<IComment>("Comment", commentSchema);
+
+// export default Comment;

@@ -1,6 +1,6 @@
-import Nav from "@/app/navbar/page";
+import Nav from "@/components/pages/Nav";
 // import Read from "@/app/read/page";
-import Contact from "@/app/contact/page";
+import Contact from "@/components/pages/Contact";
 import Blogs from "@/app/blogs/page";
 import About from "./about/page";
 // import CommentSection from "./comment/page"
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-white dark:bg-neutral-950">
       <Nav />
-      <About/>
+      <About />
       <Blogs />
       {/* <Read /> */}
       <Contact />
