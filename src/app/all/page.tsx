@@ -2,8 +2,8 @@
 export const dynamic = "force-dynamic";
 import BlogCard from "@/components/pages/blogCard";
 import { useEffect, useState } from "react";
-import Nav from "@/app/navbar/page";
-import Contact from "@/app/contact/page";
+import Nav from "@/components/pages/Nav";
+import Contact from "@/components/pages/Contact";
 import { Highlight } from "@/components/ui/hero-highlight";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 

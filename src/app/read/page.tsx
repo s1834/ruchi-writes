@@ -1,5 +1,4 @@
 "use client";
-export const dynamic = "force-dynamic";
 import React, { useEffect, useState, Suspense } from "react";
 import { FC, SVGProps } from "react";
 import { useSearchParams } from "next/navigation";
@@ -8,8 +7,8 @@ import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 import CommentSection from "../comment/CommentSection";
-import Nav from "@/app/navbar/page";
-import Contact from "../contact/page";
+import Nav from "@/components/pages/Nav";
+import Contact from "../../components/pages/Contact";
 import type { BlogContent } from "@/types/shared";
 
 // --- SVG Icon Components (Replaces react-icons) ---
