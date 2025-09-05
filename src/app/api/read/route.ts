@@ -1,33 +1,21 @@
 import { NextResponse, NextRequest } from "next/server";
 import Blogs from "@/utils/models/blogs.models";
 
+export const dynamic = "force-dynamic"; // <-- add this line
+
 export async function GET(req: NextRequest) {
-  // <-- use NextRequest here
-  try {
-    const blogId = req.nextUrl.searchParams.get("id");
+  const blogId = req.nextUrl.searchParams.get("id");
 
-    if (blogId) {
-      const blog = await Blogs.findById(blogId);
-
-      if (!blog) {
-        return NextResponse.json(
-          { message: "Blog not found" },
-          { status: 404 }
-        );
-      }
-
-      return NextResponse.json(blog, { status: 200 });
-    } else {
-      const blogs = await Blogs.find().sort({ blogViews: -1 }).limit(7);
-      return NextResponse.json(blogs, { status: 200 });
+  if (blogId) {
+    const blog = await Blogs.findById(blogId);
+    if (!blog) {
+      return NextResponse.json({ message: "Blog not found" }, { status: 404 });
     }
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json(
-      { message: "Failed to fetch blogs", error: (err as Error).message },
-      { status: 500 }
-    );
+    return NextResponse.json(blog);
   }
+
+  const blogs = await Blogs.find().sort({ blogViews: -1 }).limit(7);
+  return NextResponse.json(blogs);
 }
 
 // import { NextResponse } from "next/server";
