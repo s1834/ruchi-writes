@@ -1,13 +1,12 @@
-// src/app/api/read/route.ts
-export const dynamic = "force-dynamic"; // << add this
-
 import { NextResponse } from "next/server";
 import Blogs from "@/utils/models/blogs.models";
 
+// Handle GET request to fetch either all blogs or a specific blog by ID
 export async function GET(req: Request) {
   try {
-    const { searchParams } = new URL(req.url);
-    const blogId = searchParams.get("id");
+    // Use req.nextUrl instead of new URL(req.url)
+    const url = new URL(req.url); // this is fine for server functions, but can trigger dynamic usage
+    const blogId = url.searchParams.get("id");
 
     if (blogId) {
       const blog = await Blogs.findById(blogId);
@@ -21,7 +20,9 @@ export async function GET(req: Request) {
 
       return NextResponse.json(blog, { status: 200 });
     } else {
-      return NextResponse.json({ message: "Blog not found" }, { status: 404 });
+      // Fetch all blogs (or top blogs)
+      const blogs = await Blogs.find().sort({ blogViews: -1 }).limit(7);
+      return NextResponse.json(blogs, { status: 200 });
     }
   } catch (err) {
     console.error(err);
