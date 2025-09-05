@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { convertGoogleDriveUrl } from "@/lib/utils";
 
 interface BlogContent {
   _id: string;
@@ -28,19 +29,19 @@ export default function BlogCard({ blog }: { blog: BlogContent }) {
 
   return (
     <div className="max-w-sm mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-      <div className="relative w-full h-40">
+      <div className="relative w-full h-48">
         {blog.image && (
           <Image
-            src={blog.image || "/placeholder-image.jpg"}
+            src={convertGoogleDriveUrl(blog.image) || "/placeholder-image.jpg"}
             alt={blog.title}
             width={500}
             height={300}
-            className="w-full h-48 object-cover rounded-lg relative z-0"
+            className="w-full h-48 object-cover rounded-t-xl relative z-0"
           />
         )}
       </div>
 
-      <div className="p-5">
+      <div className="p-5 mt-2">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-lg text-gray-800">{blog.title}</h2>
           {blog.readingTime && (

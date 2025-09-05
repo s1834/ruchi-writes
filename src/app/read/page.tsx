@@ -10,6 +10,7 @@ import CommentSection from "../comment/CommentSection";
 import Nav from "@/components/pages/Nav";
 import Contact from "../../components/pages/Contact";
 import type { BlogContent } from "@/types/shared";
+import { convertGoogleDriveUrl } from "@/lib/utils";
 
 // --- SVG Icon Components (Replaces react-icons) ---
 const FaHeart = (props: React.SVGProps<SVGSVGElement> & { title?: string }) => {
@@ -331,7 +332,7 @@ function ReadPageComponent() {
         <div className="prose prose-lg dark:prose-invert max-w-none relative z-0">
           {blogContent.image && (
             <Image
-              src={blogContent.image}
+              src={convertGoogleDriveUrl(blogContent.image)}
               alt={blogContent.title}
               height={1000}
               width={1000}
