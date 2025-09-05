@@ -19,7 +19,7 @@ export default function MoreBlogCard() {
       <GlowingStarsBackgroundCard>
         <GlowingStarsTitle>Read More Blogs</GlowingStarsTitle>
         <div className="flex justify-between items-end">
-          <GlowingStarsDescription>
+          <GlowingStarsDescription className="no-underline [&>*]:no-underline">
             Some incidents which I see in daily life provoke my heart, mind and
             thoughtfulness to indulge in writing on these issues with a
             hopefulness of bringing some change in society as people read my

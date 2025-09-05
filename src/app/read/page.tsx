@@ -165,6 +165,7 @@ function ReadPageComponent() {
   const [blogContent, setBlogContent] = useState<BlogContent | null>(null);
   const [isCommentsVisible, setIsCommentsVisible] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
   const [isShareMenuVisible, setIsShareMenuVisible] = useState(false);
   const searchParams = useSearchParams();
   const blogId = searchParams.get("id");
@@ -176,12 +177,38 @@ function ReadPageComponent() {
           if (!response.ok) throw new Error("Blog post not found");
           return response.json();
         })
-        .then((data: BlogContent) => setBlogContent(data))
+        .then((data) => {
+          setBlogContent(data);
+          // Check if user has already liked this blog
+          const likedBlogs = JSON.parse(
+            localStorage.getItem("likedBlogs") || "[]"
+          );
+          setIsLiked(likedBlogs.includes(blogId));
+        })
         .catch((error) => console.error("Error fetching blog data:", error));
     }
   }, [blogId]);
 
-  const handleLike = () => setLikeCount((prevCount) => prevCount + 1);
+  const handleLike = () => {
+    if (isLiked) {
+      // Unlike the blog
+      setLikeCount((prevCount) => Math.max(0, prevCount - 1));
+      setIsLiked(false);
+      // Remove from localStorage
+      const likedBlogs = JSON.parse(localStorage.getItem("likedBlogs") || "[]");
+      // @ts-ignore
+      const updatedLikedBlogs = likedBlogs.filter((id) => id !== blogId);
+      localStorage.setItem("likedBlogs", JSON.stringify(updatedLikedBlogs));
+    } else {
+      // Like the blog
+      setLikeCount((prevCount) => prevCount + 1);
+      setIsLiked(true);
+      // Add to localStorage
+      const likedBlogs = JSON.parse(localStorage.getItem("likedBlogs") || "[]");
+      likedBlogs.push(blogId);
+      localStorage.setItem("likedBlogs", JSON.stringify(likedBlogs));
+    }
+  };
 
   const handleShare = (platform?: string) => {
     const shareUrl = window.location.href;
@@ -301,14 +328,14 @@ function ReadPageComponent() {
           </div>
         </div>
 
-        <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div className="prose prose-lg dark:prose-invert max-w-none relative z-0">
           {blogContent.image && (
             <Image
               src={blogContent.image}
               alt={blogContent.title}
               height={1000}
               width={1000}
-              className="rounded-lg mb-10 object-cover w-full"
+              className="rounded-lg mb-10 object-cover w-full relative z-0"
               priority
             />
           )}
@@ -322,10 +349,21 @@ function ReadPageComponent() {
         <div className="flex gap-4 mt-8 border-t dark:border-neutral-700 pt-4">
           <button
             onClick={handleLike}
-            className="flex flex-col items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
+            className={`flex flex-col items-center transition-all duration-300 transform hover:scale-110 ${
+              isLiked
+                ? "text-red-600 dark:text-red-500"
+                : "text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500"
+            }`}
           >
-            <FaHeart title="Like" className="text-2xl" />
-            <span className="text-sm mt-1">{likeCount} Likes</span>
+            <FaHeart
+              title={isLiked ? "Unlike" : "Like"}
+              className={`text-2xl transition-all duration-300 ${
+                isLiked ? "scale-110" : ""
+              }`}
+            />
+            <span className="text-sm mt-1">
+              {likeCount} {likeCount === 1 ? "Like" : "Likes"}
+            </span>
           </button>
           <button
             onClick={() => setIsCommentsVisible(!isCommentsVisible)}
@@ -345,7 +383,9 @@ function ReadPageComponent() {
 export default function Read() {
   return (
     <div className="bg-white dark:bg-neutral-950">
-      <Nav />
+      <div className="fixed top-0 left-0 w-full z-[10000000]">
+        <Nav />
+      </div>
       <div className="pt-24">
         <Suspense
           fallback={

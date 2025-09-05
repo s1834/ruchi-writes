@@ -31,11 +31,11 @@ export default function BlogCard({ blog }: { blog: BlogContent }) {
       <div className="relative w-full h-40">
         {blog.image && (
           <Image
-            src={blog.image}
+            src={blog.image || "/placeholder-image.jpg"}
             alt={blog.title}
-            layout="fill"
-            objectFit="cover"
-            className="object-cover"
+            width={500}
+            height={300}
+            className="w-full h-48 object-cover rounded-lg relative z-0"
           />
         )}
       </div>

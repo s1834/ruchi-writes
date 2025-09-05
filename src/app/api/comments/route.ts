@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { blogId, content, parentComment } = body;
+    const { blogId, content, parentComment, name } = body;
 
     if (!blogId || !content) {
       return NextResponse.json(
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
       blogId,
       content,
       parentComment: parentComment || null,
-      name: "Guest User",
+      name: name && name.trim() ? name.trim() : "Guest User",
       email: "guest@example.com",
     });
 

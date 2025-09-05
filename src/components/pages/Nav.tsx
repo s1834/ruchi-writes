@@ -16,6 +16,8 @@ export default function Nav() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [followState, setFollowState] = useState<boolean>(false);
+  const [showEmailModal, setShowEmailModal] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -45,11 +47,51 @@ export default function Nav() {
     if (followState) {
       if (window.confirm("Are you sure you want to unfollow??")) {
         setFollowState(false);
+        setEmail("");
       }
     } else {
-      setFollowState(true);
-      alert("Thank You for Following!!");
+      setShowEmailModal(true);
     }
+  };
+
+  const handleEmailSubmit = async () => {
+    if (!email || !email.includes("@")) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        if (data.exists) {
+          alert("You're already subscribed! Thank you for following.");
+        } else {
+          alert("Successfully subscribed! Thank you for following.");
+        }
+        setFollowState(true);
+        setShowEmailModal(false);
+        setEmail("");
+      } else {
+        alert("Failed to subscribe. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error subscribing:", error);
+      alert("Failed to subscribe. Please try again.");
+    }
+  };
+
+  const closeModal = () => {
+    setShowEmailModal(false);
+    setEmail("");
   };
 
   return (
@@ -57,7 +99,7 @@ export default function Nav() {
       {/* Navbar wrapping */}
       <Navbar
         maxWidth="lg"
-        className="fixed backdrop-blur-sm bg-white/30 dark:bg-black/60 py-4 px-6 z-50"
+        className="fixed backdrop-blur-sm bg-white/30 dark:bg-black/60 py-4 px-6 z-[9999999]"
       >
         <NavbarBrand>
           <Link
@@ -253,7 +295,7 @@ export default function Nav() {
 
       {/* Mobile View Menu */}
       {isMobileMenuOpen && (
-        <div className="sm:hidden absolute top-16 left-0 w-full bg-white dark:bg-black text-center py-6 z-40">
+        <div className="sm:hidden fixed top-16 left-0 w-full bg-white/80 dark:bg-black/80 backdrop-blur-lg border-b border-white/20 dark:border-white/10 text-center py-6 z-[9999998] shadow-lg">
           <div className="flex flex-col gap-6 px-4 md:px-8">
             {/* Link to Blogs */}
             <Link
@@ -284,10 +326,58 @@ export default function Nav() {
             </div>
 
             {/* Follow Button */}
-            <button className="px-8 py-2 rounded-full relative bg-slate-700 text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600 transform hover:scale-105">
+            <button
+              className="px-8 py-2 rounded-full relative bg-slate-700 text-white text-sm hover:shadow-2xl hover:shadow-white/[0.1] transition duration-200 border border-slate-600 transform hover:scale-105"
+              onClick={handleFollowClick}
+            >
               <div className="absolute inset-x-0 h-px w-1/2 mx-auto -top-px shadow-2xl bg-gradient-to-r from-transparent via-teal-500 to-transparent" />
-              <span className="relative z-20">Follow</span>
+              <span className="relative z-20">
+                {followState ? "Following" : "Follow"}
+              </span>
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Email Modal */}
+      {showEmailModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[99999999] flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-neutral-900 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-white/20 dark:border-white/10">
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold text-neutral-800 dark:text-white mb-2">
+                Join Our Newsletter
+              </h3>
+              <p className="text-neutral-600 dark:text-neutral-400">
+                Enter your email to follow and get updates on new posts
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your.email@example.com"
+                className="w-full px-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white placeholder-neutral-500 dark:placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all duration-300"
+                onKeyPress={(e) => e.key === "Enter" && handleEmailSubmit()}
+                autoFocus
+              />
+
+              <div className="flex gap-3">
+                <button
+                  onClick={closeModal}
+                  className="flex-1 px-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all duration-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleEmailSubmit}
+                  className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  Follow
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
