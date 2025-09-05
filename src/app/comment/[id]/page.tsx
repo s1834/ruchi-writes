@@ -1,10 +1,13 @@
 "use client";
-import React, { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import CommentSection from "../CommentSection";
+import React from "react";
+import CommentSection from "../../comment/CommentSection";
 
-export default function CommentPage({ params }: { params: { id: string } }) {
-  const blogId = params.id; // pulled from URL: /comment/[id]
+interface CommentPageProps {
+  params: { id: string };
+}
+
+const CommentPage: React.FC<CommentPageProps> = ({ params }) => {
+  const blogId = params.id;
 
   return (
     <div className="p-6">
@@ -12,7 +15,9 @@ export default function CommentPage({ params }: { params: { id: string } }) {
       <CommentSection blogId={blogId} />
     </div>
   );
-}
+};
+
+export default CommentPage;
 
 // "use client";
 // import { useEffect, useState } from "react";
