@@ -1,12 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Blogs from "@/utils/models/blogs.models";
 
-// Handle GET request to fetch either all blogs or a specific blog by ID
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+  // <-- use NextRequest here
   try {
-    // Use req.nextUrl instead of new URL(req.url)
-    const url = new URL(req.url); // this is fine for server functions, but can trigger dynamic usage
-    const blogId = url.searchParams.get("id");
+    const blogId = req.nextUrl.searchParams.get("id");
 
     if (blogId) {
       const blog = await Blogs.findById(blogId);
@@ -20,7 +18,6 @@ export async function GET(req: Request) {
 
       return NextResponse.json(blog, { status: 200 });
     } else {
-      // Fetch all blogs (or top blogs)
       const blogs = await Blogs.find().sort({ blogViews: -1 }).limit(7);
       return NextResponse.json(blogs, { status: 200 });
     }
