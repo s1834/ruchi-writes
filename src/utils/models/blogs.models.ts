@@ -57,6 +57,16 @@ const blogSchema = new mongoose.Schema(
     image: {
       type: String,
     },
+    mood: {
+      type: String,
+      enum: ["reflective", "passionate", "melancholic", "hopeful", "fierce", "tender"],
+    },
+    excerpt: {
+      type: String,
+    },
+    coverColor: {
+      type: String,
+    },
   },
   {
     collection: "blogs",
